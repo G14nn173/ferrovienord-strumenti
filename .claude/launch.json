@@ -1,0 +1,37 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ferrovienord-portable",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": [
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "portable/server.ps1",
+        "-Port",
+        "8765",
+        "-NoBrowser"
+      ],
+      "port": 8765
+    },
+    {
+      "name": "bordo-treno",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": [
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "bordo-treno/server.ps1",
+        "-Port",
+        "8790",
+        "-NoBrowser"
+      ],
+      "port": 8790
+    }
+  ]
+}

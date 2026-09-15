@@ -1,0 +1,79 @@
+RILIEVI DI BORDO — Brescia · Iseo · Edolo
+FERROVIENORD
+
+A COSA SERVE
+------------
+Registrare, dal treno in marcia, la progressiva chilometrica e il cippo km
+del punto che stai osservando. Un tocco sul pulsante grande e il punto è
+salvato, con l'ora, la posizione e una nota che puoi scrivere con calma.
+
+PRIMA DI PARTIRE
+----------------
+1. Apri l'app e concedi il permesso di localizzazione.
+2. Scegli la località da cui parte il treno e la direzione di marcia.
+3. Premi "Avvia rilevamento".
+4. Tieni lo schermo acceso: l'app lo chiede al telefono, ma se il telefono
+   si blocca comunque, riaprila e riaggancia a una località.
+
+COME LEGGERE IL NUMERO GRANDE
+-----------------------------
+   47+382   =   382 metri dopo il cippo 47
+
+Sotto trovi il cippo di riferimento e quanto manca al successivo.
+Lo zero è il paraurti del I binario della stazione di Brescia; le
+progressive delle località sono quelle del Fascicolo Linee, riferite
+all'asse del Fabbricato Viaggiatori.
+
+SE HAI PREMUTO IN RITARDO
+-------------------------
+A 80 km/h il treno fa 22 metri al secondo: fra il "guarda lì" e il dito
+passano due o tre secondi. Dopo aver premuto, usa i tasti  −2s  −5s  −10s
+−20s per riportare il punto indietro nel tempo. L'app conserva gli ultimi
+tre minuti di percorso.
+
+QUANDO IL NUMERO NON È AFFIDABILE
+---------------------------------
+La pastiglia in alto a destra dice sempre come sta il GPS:
+
+  verde   GPS ottimo        il km è buono
+  azzurro GPS buono         il km è buono
+  giallo  GPS impreciso     il km può ballare di qualche decina di metri
+  giallo  posizione stimata sei in galleria: il km prosegue a stima
+  lampeggiante
+  rosso   GPS assente       il km è fermo, NON è più attendibile
+
+Quando il numero diventa giallo significa che è calcolato, non misurato.
+Al primo cippo chilometrico il km torna esatto da solo.
+
+SE IL KM È SBAGLIATO
+--------------------
+Nel riquadro "Aggancio manuale" scegli la località che hai appena superato
+e premi "Aggancia": la progressiva riparte da quel valore ufficiale.
+Serve dopo una lunga galleria, dopo un blocco del telefono, o se ti accorgi
+che l'app sta contando da un punto sbagliato.
+
+A FINE GIRO
+-----------
+Vai in "Dati" ed esporta: Excel per l'ufficio, CSV per le elaborazioni,
+GeoJSON per portare i punti su una mappa o nel GIS. Se il telefono lo
+consente compare anche "Condividi i tre file", che li allega direttamente
+a una mail o a un messaggio.
+
+I rilievi restano nel telefono finché non li cancelli: esportali PRIMA di
+premere "Cancella i rilievi".
+
+LA TRACCIA GPS
+--------------
+L'app registra in sottofondo il percorso del treno. Non serve a te: serve a
+chi cura l'applicazione per affinare la geometria della linea. Dopo un
+viaggio completo Brescia–Edolo puoi esportarla e consegnarla.
+
+LIMITI DA CONOSCERE
+-------------------
+- Il km si riallinea da solo a ogni cippo chilometrico: uno ogni chilometro,
+  cioè circa ogni 45 secondi a 80 km/h. Fra un cippo e l'altro è calcolato
+  sulla velocità del GPS e l'errore tipico è di pochi metri.
+- In galleria l'app prosegue a stima per al massimo 90 secondi o 2,5 km,
+  poi ferma la progressiva invece di inventarla.
+- La fermata di Brescia Violino non ha una coordinata attendibile nei dati
+  di partenza: l'app non la usa per l'aggancio automatico.

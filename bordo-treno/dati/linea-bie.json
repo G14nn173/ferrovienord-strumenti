@@ -1,0 +1,1359 @@
+{
+    "meta":  {
+                 "linea":  "Brescia - Iseo - Edolo",
+                 "gestore":  "FERROVIENORD",
+                 "origine":  "km 0,000 = paraurti del I binario della stazione di Brescia",
+                 "riferimentoKm":  "Progressive delle localita riferite all asse del Fabbricato Viaggiatori",
+                 "verso":  "Progressive crescenti da Brescia verso Edolo (senso dei treni pari)",
+                 "lunghezzaKm":  102.709,
+                 "fonteKm":  "Fascicolo Linee FERROVIENORD, ed. 2020, agg. CT n. 22/2026 - Fiancate di linea tronchi Brescia-Iseo e Iseo-Edolo (FL pp. 100-105)",
+                 "fonteCoord":  "Export PIC rete 64 (UTM 32N / EPSG:32632) convertito in WGS84",
+                 "fonteCippi":  "Censimento georeferenziato dei cippi chilometrici (diagnostica FERROVIENORD), coordinate WGS84",
+                 "generato":  "2026-09-14"
+             },
+    "punti":  [
+                  {
+                      "km":  0,
+                      "tipo":  "capotronco",
+                      "nome":  "BRESCIA",
+                      "lat":  45.532315,
+                      "lon":  10.212845,
+                      "sigla":  "BSC"
+                  },
+                  {
+                      "km":  0.461,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  1,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 1",
+                      "lat":  45.536908,
+                      "lon":  10.2006116
+                  },
+                  {
+                      "km":  2,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 2",
+                      "lat":  45.5429892,
+                      "lon":  10.1917846
+                  },
+                  {
+                      "km":  2.087,
+                      "tipo":  "stazione",
+                      "nome":  "BRESCIA BORGO SAN GIOVANNI",
+                      "lat":  45.543205,
+                      "lon":  10.190719,
+                      "sigla":  "BSG"
+                  },
+                  {
+                      "km":  2.409,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  3,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  3,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 3",
+                      "lat":  45.5460797,
+                      "lon":  10.1798548
+                  },
+                  {
+                      "km":  3.952,
+                      "tipo":  "fermata",
+                      "nome":  "BRESCIA VIOLINO",
+                      "lat":  45.550854,
+                      "lon":  10.159419,
+                      "sigla":  "BR4",
+                      "coordAffidabile":  false
+                  },
+                  {
+                      "km":  4,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 4",
+                      "lat":  45.5452239,
+                      "lon":  10.1672363
+                  },
+                  {
+                      "km":  4.666,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  5,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 5",
+                      "lat":  45.54651,
+                      "lon":  10.1545766
+                  },
+                  {
+                      "km":  5.148,
+                      "tipo":  "fermata",
+                      "nome":  "MANDOLOSSA",
+                      "lat":  45.547139,
+                      "lon":  10.153013,
+                      "sigla":  "MXX"
+                  },
+                  {
+                      "km":  5.16,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  6,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 6",
+                      "lat":  45.5492989,
+                      "lon":  10.1426525
+                  },
+                  {
+                      "km":  6.174,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  6.345,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  7,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 7",
+                      "lat":  45.5549338,
+                      "lon":  10.1331102
+                  },
+                  {
+                      "km":  8,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 8",
+                      "lat":  45.5615524,
+                      "lon":  10.1244341
+                  },
+                  {
+                      "km":  8.695,
+                      "tipo":  "stazione",
+                      "nome":  "CASTEGNATO",
+                      "lat":  45.566124,
+                      "lon":  10.118426,
+                      "sigla":  "KTG"
+                  },
+                  {
+                      "km":  9,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 9",
+                      "lat":  45.5681686,
+                      "lon":  10.1157534
+                  },
+                  {
+                      "km":  9.974,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  10,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 10",
+                      "lat":  45.5747841,
+                      "lon":  10.1070705
+                  },
+                  {
+                      "km":  11,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 11",
+                      "lat":  45.5807525,
+                      "lon":  10.0974856
+                  },
+                  {
+                      "km":  12,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 12",
+                      "lat":  45.5864514,
+                      "lon":  10.0875745
+                  },
+                  {
+                      "km":  12.052,
+                      "tipo":  "fermata",
+                      "nome":  "PADERNO FRANCIACORTA",
+                      "lat":  45.586733,
+                      "lon":  10.08703,
+                      "sigla":  "PNX"
+                  },
+                  {
+                      "km":  12.536,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  13,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 13",
+                      "lat":  45.5916644,
+                      "lon":  10.07728
+                  },
+                  {
+                      "km":  14,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 14",
+                      "lat":  45.5903084,
+                      "lon":  10.0647368
+                  },
+                  {
+                      "km":  14.087,
+                      "tipo":  "stazione",
+                      "nome":  "PASSIRANO",
+                      "lat":  45.590248,
+                      "lon":  10.063595,
+                      "sigla":  "PXS"
+                  },
+                  {
+                      "km":  14.643,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  15,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 15",
+                      "lat":  45.5885964,
+                      "lon":  10.052487
+                  },
+                  {
+                      "km":  16,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 16",
+                      "lat":  45.5902576,
+                      "lon":  10.0409245
+                  },
+                  {
+                      "km":  16.085,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  16.685,
+                      "tipo":  "stazione",
+                      "nome":  "BORNATO - CALINO",
+                      "lat":  45.590358,
+                      "lon":  10.032986,
+                      "sigla":  "BGC"
+                  },
+                  {
+                      "km":  17,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 17",
+                      "lat":  45.5923771,
+                      "lon":  10.0301753
+                  },
+                  {
+                      "km":  17.466,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  18,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 18",
+                      "lat":  45.6011319,
+                      "lon":  10.029971
+                  },
+                  {
+                      "km":  18.085,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  19,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 19",
+                      "lat":  45.6072163,
+                      "lon":  10.0206074
+                  },
+                  {
+                      "km":  20,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 20",
+                      "lat":  45.6151837,
+                      "lon":  10.0171721
+                  },
+                  {
+                      "km":  20.813,
+                      "tipo":  "stazione",
+                      "nome":  "BORGONATO - ADRO",
+                      "lat":  45.622248,
+                      "lon":  10.020042,
+                      "sigla":  "BGA"
+                  },
+                  {
+                      "km":  21,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 21",
+                      "lat":  45.6236705,
+                      "lon":  10.0212522
+                  },
+                  {
+                      "km":  22,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 22",
+                      "lat":  45.6311146,
+                      "lon":  10.0284547
+                  },
+                  {
+                      "km":  22.716,
+                      "tipo":  "fermata",
+                      "nome":  "PROVAGLIO - TIMOLINE",
+                      "lat":  45.635045,
+                      "lon":  10.035328,
+                      "sigla":  "PVX"
+                  },
+                  {
+                      "km":  23,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 23",
+                      "lat":  45.6372119,
+                      "lon":  10.0372295
+                  },
+                  {
+                      "km":  23.564,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  24,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 24",
+                      "lat":  45.6456174,
+                      "lon":  10.0368765
+                  },
+                  {
+                      "km":  25,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 25",
+                      "lat":  45.650460699999996,
+                      "lon":  10.0475476
+                  },
+                  {
+                      "km":  25.395,
+                      "tipo":  "deviatoio",
+                      "nome":  "Deviatoio ingresso Iseo"
+                  },
+                  {
+                      "km":  25.713,
+                      "tipo":  "capotronco",
+                      "nome":  "ISEO",
+                      "lat":  45.656493,
+                      "lon":  10.050201,
+                      "sigla":  "IEO"
+                  },
+                  {
+                      "km":  25.934,
+                      "tipo":  "deviatoio",
+                      "nome":  "Deviatoio uscita Iseo"
+                  },
+                  {
+                      "km":  26,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 26",
+                      "lat":  45.6587964,
+                      "lon":  10.0519325
+                  },
+                  {
+                      "km":  27,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 27",
+                      "lat":  45.6648186,
+                      "lon":  10.0602973
+                  },
+                  {
+                      "km":  28,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 28",
+                      "lat":  45.668658,
+                      "lon":  10.071576
+                  },
+                  {
+                      "km":  28.559,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  28.878,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  28.885,
+                      "tipo":  "fermata",
+                      "nome":  "PILZONE",
+                      "lat":  45.674405,
+                      "lon":  10.079194,
+                      "sigla":  "PZN"
+                  },
+                  {
+                      "km":  29,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 29",
+                      "lat":  45.6750573,
+                      "lon":  10.0803066
+                  },
+                  {
+                      "km":  29.386,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  29.778,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  30,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 30",
+                      "lat":  45.6802926,
+                      "lon":  10.0905786
+                  },
+                  {
+                      "km":  30.338,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  30.943,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  31,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 31",
+                      "lat":  45.6868174,
+                      "lon":  10.0991212
+                  },
+                  {
+                      "km":  31.227,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  31.324,
+                      "tipo":  "fermata",
+                      "nome":  "SULZANO",
+                      "lat":  45.689502,
+                      "lon":  10.100628,
+                      "sigla":  "SUZ"
+                  },
+                  {
+                      "km":  31.474,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  31.941,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  32,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 32",
+                      "lat":  45.6947456,
+                      "lon":  10.1039499
+                  },
+                  {
+                      "km":  32.766,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  33,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 33",
+                      "lat":  45.7027942,
+                      "lon":  10.1086656
+                  },
+                  {
+                      "km":  34,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 34",
+                      "lat":  45.7113233,
+                      "lon":  10.1112555
+                  },
+                  {
+                      "km":  34.171,
+                      "tipo":  "stazione",
+                      "nome":  "SALE MARASINO",
+                      "lat":  45.712806,
+                      "lon":  10.111687,
+                      "sigla":  "SRX"
+                  },
+                  {
+                      "km":  34.354,
+                      "tipo":  "deviatoio",
+                      "nome":  "Deviatoio uscita Sale Marasino"
+                  },
+                  {
+                      "km":  35,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 35",
+                      "lat":  45.7200561,
+                      "lon":  10.1105612
+                  },
+                  {
+                      "km":  36,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 36",
+                      "lat":  45.726578,
+                      "lon":  10.1022775
+                  },
+                  {
+                      "km":  37,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 37",
+                      "lat":  45.7321299,
+                      "lon":  10.0936222
+                  },
+                  {
+                      "km":  37.147,
+                      "tipo":  "segnale",
+                      "nome":  "Segnale di protezione Marone - Zone"
+                  },
+                  {
+                      "km":  37.74,
+                      "tipo":  "stazione",
+                      "nome":  "MARONE - ZONE",
+                      "lat":  45.738185,
+                      "lon":  10.093374,
+                      "sigla":  "MZN"
+                  },
+                  {
+                      "km":  38,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 38",
+                      "lat":  45.7406639,
+                      "lon":  10.0930695
+                  },
+                  {
+                      "km":  39,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 39",
+                      "lat":  45.7487578,
+                      "lon":  10.0877469
+                  },
+                  {
+                      "km":  39.67,
+                      "tipo":  "fermata",
+                      "nome":  "VELLO",
+                      "lat":  45.753393,
+                      "lon":  10.082382,
+                      "sigla":  "WLL"
+                  },
+                  {
+                      "km":  39.708,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  40,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 40",
+                      "lat":  45.7557089,
+                      "lon":  10.0797576
+                  },
+                  {
+                      "km":  41,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 41",
+                      "lat":  45.763389599999996,
+                      "lon":  10.0735879
+                  },
+                  {
+                      "km":  42,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 42",
+                      "lat":  45.7713094,
+                      "lon":  10.0681619
+                  },
+                  {
+                      "km":  43,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 43",
+                      "lat":  45.7794969,
+                      "lon":  10.0730101
+                  },
+                  {
+                      "km":  44,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 44",
+                      "lat":  45.7845116,
+                      "lon":  10.0819098
+                  },
+                  {
+                      "km":  44.591,
+                      "tipo":  "fermata",
+                      "nome":  "TOLINE",
+                      "lat":  45.787288,
+                      "lon":  10.088269,
+                      "sigla":  "TLI"
+                  },
+                  {
+                      "km":  44.661,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  45,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 45",
+                      "lat":  45.7898534,
+                      "lon":  10.0918325
+                  },
+                  {
+                      "km":  46,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 46",
+                      "lat":  45.7949381,
+                      "lon":  10.1022914
+                  },
+                  {
+                      "km":  46.039,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  47,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 47",
+                      "lat":  45.8032117,
+                      "lon":  10.1061022
+                  },
+                  {
+                      "km":  47.377,
+                      "tipo":  "stazione",
+                      "nome":  "PISOGNE",
+                      "lat":  45.806554,
+                      "lon":  10.105632,
+                      "sigla":  "PNG"
+                  },
+                  {
+                      "km":  47.856,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  48,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 48",
+                      "lat":  45.8118857,
+                      "lon":  10.1077374
+                  },
+                  {
+                      "km":  49,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 49",
+                      "lat":  45.8199969,
+                      "lon":  10.1133045
+                  },
+                  {
+                      "km":  50,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 50",
+                      "lat":  45.8275629,
+                      "lon":  10.120221
+                  },
+                  {
+                      "km":  50.161,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  50.673,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  51,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 51",
+                      "lat":  45.8349546,
+                      "lon":  10.1275584
+                  },
+                  {
+                      "km":  51.216,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  52,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 52",
+                      "lat":  45.8396483,
+                      "lon":  10.1377545
+                  },
+                  {
+                      "km":  52.09,
+                      "tipo":  "stazione",
+                      "nome":  "PIAN CAMUNO - GRATACASOLO",
+                      "lat":  45.840025,
+                      "lon":  10.138806,
+                      "sigla":  "PNU"
+                  },
+                  {
+                      "km":  53,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 53",
+                      "lat":  45.8468884,
+                      "lon":  10.1450123
+                  },
+                  {
+                      "km":  53.224,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  54,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 54",
+                      "lat":  45.8537805,
+                      "lon":  10.1493807
+                  },
+                  {
+                      "km":  54.246,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  54.907,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  54.948,
+                      "tipo":  "fermata",
+                      "nome":  "ARTOGNE - GIANICO",
+                      "lat":  45.858742,
+                      "lon":  10.158938,
+                      "sigla":  "ATG"
+                  },
+                  {
+                      "km":  55,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 55",
+                      "lat":  45.8590666,
+                      "lon":  10.1593178
+                  },
+                  {
+                      "km":  55.251,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  56,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 56",
+                      "lat":  45.8662576,
+                      "lon":  10.1670568
+                  },
+                  {
+                      "km":  56.282,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  57,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 57",
+                      "lat":  45.8739496,
+                      "lon":  10.1721221
+                  },
+                  {
+                      "km":  57.31,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  58,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 58",
+                      "lat":  45.8802996,
+                      "lon":  10.1805313
+                  },
+                  {
+                      "km":  58.452,
+                      "tipo":  "stazione",
+                      "nome":  "DARFO - CORNA",
+                      "lat":  45.88432,
+                      "lon":  10.18115,
+                      "sigla":  "DAF"
+                  },
+                  {
+                      "km":  59,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 59",
+                      "lat":  45.8882973,
+                      "lon":  10.1846883
+                  },
+                  {
+                      "km":  59.664,
+                      "tipo":  "fermata",
+                      "nome":  "BOARIO TERME",
+                      "lat":  45.892238,
+                      "lon":  10.190924,
+                      "sigla":  "OAR"
+                  },
+                  {
+                      "km":  60,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 60",
+                      "lat":  45.8947236,
+                      "lon":  10.193173
+                  },
+                  {
+                      "km":  60.682,
+                      "tipo":  "fermata",
+                      "nome":  "ERBANNO - ANGONE",
+                      "lat":  45.900513,
+                      "lon":  10.195733,
+                      "sigla":  "ENN"
+                  },
+                  {
+                      "km":  60.813,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  61,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 61",
+                      "lat":  45.9029134,
+                      "lon":  10.197949
+                  },
+                  {
+                      "km":  61.641,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  62,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 62",
+                      "lat":  45.9088357,
+                      "lon":  10.2075347
+                  },
+                  {
+                      "km":  63,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 63",
+                      "lat":  45.9138112,
+                      "lon":  10.2182643
+                  },
+                  {
+                      "km":  63.048,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  63.345,
+                      "tipo":  "fermata",
+                      "nome":  "PIAN DI BORNO",
+                      "lat":  45.915965,
+                      "lon":  10.221415,
+                      "sigla":  "PNB"
+                  },
+                  {
+                      "km":  63.609,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  63.916,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  64,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 64",
+                      "lat":  45.9203571,
+                      "lon":  10.2270722
+                  },
+                  {
+                      "km":  65,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 65",
+                      "lat":  45.926465,
+                      "lon":  10.2364936
+                  },
+                  {
+                      "km":  65.498,
+                      "tipo":  "stazione",
+                      "nome":  "COGNO - ESINE",
+                      "lat":  45.929542,
+                      "lon":  10.241052,
+                      "sigla":  "CEY"
+                  },
+                  {
+                      "km":  66,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 66",
+                      "lat":  45.932994,
+                      "lon":  10.2452378
+                  },
+                  {
+                      "km":  67,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 67",
+                      "lat":  45.939015499999996,
+                      "lon":  10.2546263
+                  },
+                  {
+                      "km":  68,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 68",
+                      "lat":  45.9431464,
+                      "lon":  10.2657967
+                  },
+                  {
+                      "km":  68.226,
+                      "tipo":  "stazione",
+                      "nome":  "CIVIDATE - MALEGNO",
+                      "lat":  45.943414,
+                      "lon":  10.268714,
+                      "sigla":  "CMW"
+                  },
+                  {
+                      "km":  69,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 69",
+                      "lat":  45.9468663,
+                      "lon":  10.2765292
+                  },
+                  {
+                      "km":  70,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 70",
+                      "lat":  45.954527,
+                      "lon":  10.2809067
+                  },
+                  {
+                      "km":  71,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 71",
+                      "lat":  45.9571773,
+                      "lon":  10.2929801
+                  },
+                  {
+                      "km":  71.843,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  72,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 72",
+                      "lat":  45.9592133,
+                      "lon":  10.3051268
+                  },
+                  {
+                      "km":  72.047,
+                      "tipo":  "stazione",
+                      "nome":  "BRENO",
+                      "lat":  45.9591,
+                      "lon":  10.305697,
+                      "sigla":  "MEE"
+                  },
+                  {
+                      "km":  72.368,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  73,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 73",
+                      "lat":  45.9619463,
+                      "lon":  10.3157938
+                  },
+                  {
+                      "km":  73.647,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  73.826,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  74,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 74",
+                      "lat":  45.9703699,
+                      "lon":  10.3194843
+                  },
+                  {
+                      "km":  74.72,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  75,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 75",
+                      "lat":  45.9788529,
+                      "lon":  10.3237014
+                  },
+                  {
+                      "km":  75.331,
+                      "tipo":  "fermata",
+                      "nome":  "NIARDO - LOSINE",
+                      "lat":  45.981459,
+                      "lon":  10.325838,
+                      "sigla":  "NIA"
+                  },
+                  {
+                      "km":  76,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 76",
+                      "lat":  45.9845414,
+                      "lon":  10.3330368
+                  },
+                  {
+                      "km":  76.273,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  76.68,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  76.964,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  77,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 77",
+                      "lat":  45.9927644,
+                      "lon":  10.336836
+                  },
+                  {
+                      "km":  77.463,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  77.494,
+                      "tipo":  "fermata",
+                      "nome":  "CETO - CERVENO",
+                      "lat":  45.996913,
+                      "lon":  10.338922,
+                      "sigla":  "CEW"
+                  },
+                  {
+                      "km":  78,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 78",
+                      "lat":  45.9995671,
+                      "lon":  10.3441078
+                  },
+                  {
+                      "km":  79,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 79",
+                      "lat":  46.0067382,
+                      "lon":  10.345522
+                  },
+                  {
+                      "km":  79.142,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  79.966,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  80,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 80",
+                      "lat":  46.0147133,
+                      "lon":  10.347904
+                  },
+                  {
+                      "km":  80.667,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  81,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 81",
+                      "lat":  46.0227672,
+                      "lon":  10.3453459
+                  },
+                  {
+                      "km":  81.967,
+                      "tipo":  "stazione",
+                      "nome":  "CAPO DI PONTE",
+                      "lat":  46.031055,
+                      "lon":  10.346285,
+                      "sigla":  "KDP"
+                  },
+                  {
+                      "km":  82,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 82",
+                      "lat":  46.0313763,
+                      "lon":  10.3463532
+                  },
+                  {
+                      "km":  82.892,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  83,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 83",
+                      "lat":  46.0397021,
+                      "lon":  10.3442433
+                  },
+                  {
+                      "km":  84,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 84",
+                      "lat":  46.0484082,
+                      "lon":  10.3474792
+                  },
+                  {
+                      "km":  84.579,
+                      "tipo":  "fermata",
+                      "nome":  "SELLERO",
+                      "lat":  46.053545,
+                      "lon":  10.348742,
+                      "sigla":  "SLX"
+                  },
+                  {
+                      "km":  84.652,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  85,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 85",
+                      "lat":  46.0569799,
+                      "lon":  10.3509806
+                  },
+                  {
+                      "km":  86,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 86",
+                      "lat":  46.0658813,
+                      "lon":  10.3498801
+                  },
+                  {
+                      "km":  86.247,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  86.758,
+                      "tipo":  "stazione",
+                      "nome":  "CEDEGOLO",
+                      "lat":  46.072521,
+                      "lon":  10.350022,
+                      "sigla":  "CGH"
+                  },
+                  {
+                      "km":  87,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 87",
+                      "lat":  46.0744714,
+                      "lon":  10.3486576
+                  },
+                  {
+                      "km":  87.821,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  88,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 88",
+                      "lat":  46.0828792,
+                      "lon":  10.3448754
+                  },
+                  {
+                      "km":  88.376,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  89,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 89",
+                      "lat":  46.0855703,
+                      "lon":  10.3337459
+                  },
+                  {
+                      "km":  90,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 90",
+                      "lat":  46.0859866,
+                      "lon":  10.3212676
+                  },
+                  {
+                      "km":  90.205,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  90.721,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  90.745,
+                      "tipo":  "fermata",
+                      "nome":  "FORNO ALLIONE",
+                      "lat":  46.090157,
+                      "lon":  10.314924,
+                      "sigla":  "FLL"
+                  },
+                  {
+                      "km":  91,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 91",
+                      "lat":  46.0923979,
+                      "lon":  10.3145119
+                  },
+                  {
+                      "km":  92,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 92",
+                      "lat":  46.1005661,
+                      "lon":  10.3101961
+                  },
+                  {
+                      "km":  93,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 93",
+                      "lat":  46.109288,
+                      "lon":  10.3107889
+                  },
+                  {
+                      "km":  94,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 94",
+                      "lat":  46.1166754,
+                      "lon":  10.3158197
+                  },
+                  {
+                      "km":  94.247,
+                      "tipo":  "stazione",
+                      "nome":  "MALONNO",
+                      "lat":  46.118747,
+                      "lon":  10.316812,
+                      "sigla":  "MLW"
+                  },
+                  {
+                      "km":  94.575,
+                      "tipo":  "velocita",
+                      "nome":  "Variazione velocita / grado di frenatura"
+                  },
+                  {
+                      "km":  95,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 95",
+                      "lat":  46.1253818,
+                      "lon":  10.3180412
+                  },
+                  {
+                      "km":  96,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 96",
+                      "lat":  46.132229,
+                      "lon":  10.3262859
+                  },
+                  {
+                      "km":  96.498,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  97,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 97",
+                      "lat":  46.1381272,
+                      "lon":  10.3351268
+                  },
+                  {
+                      "km":  98,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 98",
+                      "lat":  46.1460304,
+                      "lon":  10.3409726
+                  },
+                  {
+                      "km":  99,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 99",
+                      "lat":  46.1539942,
+                      "lon":  10.3454903
+                  },
+                  {
+                      "km":  100,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 100",
+                      "lat":  46.1619969,
+                      "lon":  10.3508776
+                  },
+                  {
+                      "km":  100.14,
+                      "tipo":  "fermata",
+                      "nome":  "SONICO",
+                      "lat":  46.163247,
+                      "lon":  10.351249,
+                      "sigla":  "SNK"
+                  },
+                  {
+                      "km":  100.778,
+                      "tipo":  "pla",
+                      "nome":  "PL automatico"
+                  },
+                  {
+                      "km":  101,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 101",
+                      "lat":  46.1704841,
+                      "lon":  10.3481996
+                  },
+                  {
+                      "km":  102,
+                      "tipo":  "cippo",
+                      "nome":  "Cippo 102",
+                      "lat":  46.1760264,
+                      "lon":  10.3384782
+                  },
+                  {
+                      "km":  102.709,
+                      "tipo":  "capotronco",
+                      "nome":  "EDOLO",
+                      "lat":  46.176986,
+                      "lon":  10.329334,
+                      "sigla":  "CE1"
+                  }
+              ]
+}

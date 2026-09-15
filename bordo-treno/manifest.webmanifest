@@ -1,0 +1,20 @@
+{
+  "name": "Rilievi di bordo — Brescia · Iseo · Edolo",
+  "short_name": "Rilievi BIE",
+  "description": "Registrazione della progressiva chilometrica e del cippo km dal treno in marcia, sulla linea Brescia - Iseo - Edolo.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06141e",
+  "theme_color": "#06141e",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    { "src": "icone/icona-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icone/icona-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icone/icona-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icone/icona.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

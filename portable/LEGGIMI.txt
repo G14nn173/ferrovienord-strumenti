@@ -1,0 +1,43 @@
+FERROVIENORD - MAPPA INTERATTIVA V1
+==================================
+
+AVVIO
+1. Aprire la cartella "portable".
+2. Fare doppio clic su "Avvia Mappa.cmd".
+3. Lasciare aperta la finestra del server finché si usa la mappa.
+4. Per chiudere, premere Ctrl+C nella finestra del server oppure chiuderla.
+
+REQUISITI
+- Windows 10 o Windows 11.
+- Un browser moderno.
+- PowerShell, già incluso in Windows.
+- Non sono richiesti Node.js, npm, installazioni o collegamento Internet.
+
+FUNZIONI V1
+- mappa completa delle reti Ovest ed Est;
+- ricerca per nome, sigla, codice località o codice MIR;
+- filtri per area, servizio viaggiatori e interconnessioni;
+- etichette configurabili;
+- zoom con rotella o pulsanti e trascinamento della mappa;
+- selezione di località e tratte;
+- pannelli con collegamenti e dati tecnici;
+- layout adattivo per desktop, tablet e telefono;
+- dati e risorse interamente locali.
+
+IMPORTAZIONE E VISUALIZZAZIONE ANOMALIE
+1. Avviare la mappa e premere "Importa anomalie" nella barra superiore.
+2. Selezionare un file Excel .xlsx oppure .xltx.
+3. Controllare il riepilogo degli eventi e gli eventuali valori non riconosciuti.
+4. Premere "Visualizza anomalie".
+5. Le stazioni e le tratte interessate vengono colorate dal verde al porpora
+   in base al numero di eventi.
+6. Fare clic su un elemento colorato per aprire il dettaglio degli eventi.
+
+L'importazione usa la colonna N "Località" per riconoscere stazioni e tratte e
+la colonna B "Avviso" per evitare conteggi duplicati. Il file Excel viene letto
+soltanto nel browser e non viene caricato o trasmesso in rete.
+
+NOTA
+Non aprire direttamente index.html: i browser impediscono alla pagina di leggere
+il file JSON locale. Il launcher avvia un piccolo server soltanto sul computer
+locale, all'indirizzo 127.0.0.1, senza pubblicare nulla in rete.

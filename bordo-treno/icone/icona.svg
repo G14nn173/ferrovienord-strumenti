@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rilievi di bordo">
+  <rect width="512" height="512" rx="110" fill="#06141e"/>
+  <!-- binario -->
+  <rect x="150" y="72" width="14" height="368" rx="7" fill="#16c8f4" opacity=".55"/>
+  <rect x="196" y="72" width="14" height="368" rx="7" fill="#16c8f4" opacity=".55"/>
+  <g fill="#16c8f4" opacity=".35">
+    <rect x="132" y="118" width="96" height="13" rx="6"/>
+    <rect x="132" y="188" width="96" height="13" rx="6"/>
+    <rect x="132" y="258" width="96" height="13" rx="6"/>
+    <rect x="132" y="328" width="96" height="13" rx="6"/>
+    <rect x="132" y="398" width="96" height="13" rx="6"/>
+  </g>
+  <!-- cippo chilometrico -->
+  <rect x="268" y="160" width="150" height="192" rx="24" fill="#b8ed4a"/>
+  <text x="343" y="238" font-family="system-ui,Segoe UI,Roboto,sans-serif" font-size="62"
+        font-weight="700" fill="#08202b" text-anchor="middle">km</text>
+  <rect x="292" y="262" width="102" height="12" rx="6" fill="#08202b" opacity=".35"/>
+  <text x="343" y="326" font-family="system-ui,Segoe UI,Roboto,sans-serif" font-size="54"
+        font-weight="700" fill="#08202b" text-anchor="middle">47</text>
+</svg>

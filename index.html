@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FERROVIENORD — strumenti</title>
+<style>
+  :root{--bg:#06141e;--panel:#091c28;--line:rgba(169,209,226,.14);
+        --muted:#7894a1;--text:#eef7fa;--cyan:#16c8f4;--lime:#b8ed4a}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);
+       font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+       display:flex;align-items:center;justify-content:center;padding:24px}
+  main{width:100%;max-width:560px}
+  h1{font-size:20px;letter-spacing:.02em;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px}
+  a.scheda{display:block;text-decoration:none;color:inherit;background:var(--panel);
+           border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px}
+  a.scheda:hover{border-color:var(--cyan)}
+  .titolo{font-size:17px;font-weight:700;color:var(--cyan);margin-bottom:4px}
+  .titolo.verde{color:var(--lime)}
+  .desc{font-size:14px;color:var(--muted)}
+  footer{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+<main>
+  <h1>FERROVIENORD</h1>
+  <p class="sub">Strumenti per la circolazione e la manutenzione</p>
+
+  <a class="scheda" href="bordo-treno/">
+    <div class="titolo verde">Rilievi di bordo — Brescia · Iseo · Edolo</div>
+    <div class="desc">
+      Registra progressiva chilometrica e cippo km dal treno in marcia.
+      Installabile sul telefono, funziona senza campo.
+    </div>
+  </a>
+
+  <a class="scheda" href="portable/">
+    <div class="titolo">Mappa interattiva della rete</div>
+    <div class="desc">
+      Località e tratte della rete FERROVIENORD, con importazione delle
+      anomalie da Excel.
+    </div>
+  </a>
+
+  <footer>Codice e dati: vedi il repository.</footer>
+</main>
+</body>
+</html>

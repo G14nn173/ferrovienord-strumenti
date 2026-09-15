@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06141e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Rilievi di bordo — Brescia · Iseo · Edolo</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone/icona.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icone/icona-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="testata">
+  <div class="testata-linea">
+    <strong>Brescia · Iseo · Edolo</strong>
+    <span id="etichetta-verso" class="verso">—</span>
+  </div>
+  <button id="pill-gps" class="pill pill-assente" type="button" aria-live="polite">
+    <span class="pill-punto"></span><span id="pill-gps-testo">GPS spento</span>
+  </button>
+</header>
+
+<main>
+
+  <!-- ============================ RILIEVO ============================ -->
+  <section id="vista-rilievo" class="vista attiva">
+
+    <div id="avvio" class="scheda scheda-avvio">
+      <h2>Prima di partire</h2>
+      <p class="nota">Indica da dove parte il treno: serve per agganciare la progressiva ai km ufficiali del Fascicolo.</p>
+      <label class="campo">
+        <span>Località di partenza</span>
+        <select id="sel-partenza"></select>
+      </label>
+      <label class="campo">
+        <span>Direzione di marcia</span>
+        <div class="segmentato" id="sel-verso" role="radiogroup" aria-label="Direzione di marcia">
+          <button type="button" data-verso="1" role="radio" aria-checked="true" class="sel">verso Edolo</button>
+          <button type="button" data-verso="-1" role="radio" aria-checked="false">verso Brescia</button>
+        </div>
+      </label>
+      <button id="btn-avvia" class="btn btn-primario" type="button">Avvia rilevamento</button>
+      <p class="nota nota-piccola">Il GPS viene chiesto ora e resta attivo finché l'app è aperta. Tieni lo schermo acceso.</p>
+    </div>
+
+    <div id="pannello" hidden>
+      <div class="scheda scheda-km">
+        <div class="km-etichetta">progressiva</div>
+        <div id="km-grande" class="km-grande">—</div>
+        <div id="km-cippo" class="km-cippo">in attesa del primo aggancio</div>
+        <div class="km-barra" aria-hidden="true"><div id="km-avanzamento"></div></div>
+        <div class="km-estremi"><span>Brescia 0</span><span>Edolo 102,709</span></div>
+      </div>
+
+      <button id="btn-registra" class="btn-registra" type="button">
+        <span class="btn-registra-titolo">REGISTRA PUNTO</span>
+        <span class="btn-registra-sub">tocca quando sei sul punto</span>
+      </button>
+
+      <div class="griglia-stato">
+        <div class="stato"><span class="stato-eti">tratta</span><strong id="st-tratta">—</strong></div>
+        <div class="stato"><span class="stato-eti">prossima località</span><strong id="st-prossima">—</strong></div>
+        <div class="stato"><span class="stato-eti">velocità</span><strong id="st-velocita">—</strong></div>
+        <div class="stato"><span class="stato-eti">ultimo aggancio</span><strong id="st-ancora">—</strong></div>
+      </div>
+
+      <div id="avviso-deriva" class="avviso" hidden></div>
+
+      <div class="scheda scheda-manuale">
+        <h3>Aggancio manuale</h3>
+        <p class="nota">Se il km a schermo non corrisponde alla realtà, riallinealo su una località appena superata.</p>
+        <div class="riga-manuale">
+          <select id="sel-aggancio"></select>
+          <button id="btn-aggancia" class="btn" type="button">Aggancia</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ELENCO ============================ -->
+  <section id="vista-elenco" class="vista">
+    <div class="intestazione-vista">
+      <h2>Rilievi</h2>
+      <span id="conta-rilievi" class="badge">0</span>
+    </div>
+    <div id="lista-rilievi" class="lista"></div>
+    <p id="vuoto-rilievi" class="vuoto">Nessun rilievo registrato.</p>
+  </section>
+
+  <!-- ============================ LINEA ============================ -->
+  <section id="vista-linea" class="vista">
+    <div class="intestazione-vista">
+      <h2>Linea</h2>
+      <span id="conta-punti" class="badge">0</span>
+    </div>
+    <div class="filtri" id="filtri-linea">
+      <button type="button" data-filtro="tutti" class="sel">Tutti</button>
+      <button type="button" data-filtro="localita">Località</button>
+      <button type="button" data-filtro="cippo">Cippi</button>
+      <button type="button" data-filtro="pla">PL</button>
+      <button type="button" data-filtro="velocita">Velocità</button>
+    </div>
+    <div id="lista-linea" class="lista lista-linea"></div>
+  </section>
+
+  <!-- ============================ DATI ============================ -->
+  <section id="vista-dati" class="vista">
+    <div class="intestazione-vista"><h2>Dati</h2></div>
+
+    <div class="scheda">
+      <h3>Esporta i rilievi</h3>
+      <p class="nota">Un file per sessione di lavoro, con km, cippo, nota e coordinate.</p>
+      <div class="bottoni-export">
+        <button id="btn-xlsx" class="btn" type="button">Excel (.xlsx)</button>
+        <button id="btn-csv" class="btn" type="button">CSV</button>
+        <button id="btn-geojson" class="btn" type="button">GeoJSON</button>
+      </div>
+      <button id="btn-condividi" class="btn btn-fantasma" type="button" hidden>Condividi i tre file…</button>
+    </div>
+
+    <div class="scheda">
+      <h3>Traccia GPS</h3>
+      <p class="nota">
+        Registrata in sottofondo a ogni viaggio. Serve a ricostruire la geometria reale del
+        binario: dopo un viaggio completo diventa il tracciato calibrato dell'app.
+      </p>
+      <div class="riga-traccia">
+        <div class="stato"><span class="stato-eti">punti</span><strong id="st-traccia">0</strong></div>
+        <button id="btn-traccia" class="btn" type="button">Esporta traccia</button>
+      </div>
+    </div>
+
+    <div class="scheda">
+      <h3>Manutenzione</h3>
+      <div class="bottoni-export">
+        <button id="btn-svuota-rilievi" class="btn btn-pericolo" type="button">Cancella i rilievi</button>
+        <button id="btn-svuota-traccia" class="btn btn-pericolo" type="button">Cancella la traccia</button>
+      </div>
+    </div>
+
+    <div class="scheda scheda-fonti">
+      <h3>Fonti dei dati</h3>
+      <dl id="fonti"></dl>
+    </div>
+  </section>
+
+</main>
+
+<nav class="barra">
+  <button type="button" data-vista="vista-rilievo" class="sel">Rilievo</button>
+  <button type="button" data-vista="vista-elenco">Rilievi</button>
+  <button type="button" data-vista="vista-linea">Linea</button>
+  <button type="button" data-vista="vista-dati">Dati</button>
+</nav>
+
+<!-- scheda di conferma dopo la registrazione -->
+<div id="foglio" class="foglio" hidden>
+  <div class="foglio-corpo" role="dialog" aria-modal="true" aria-labelledby="foglio-km">
+    <div class="foglio-maniglia" aria-hidden="true"></div>
+    <div class="foglio-testa">
+      <div>
+        <div class="foglio-eti">punto registrato</div>
+        <div id="foglio-km" class="foglio-km">—</div>
+        <div id="foglio-ctx" class="foglio-ctx">—</div>
+      </div>
+      <button id="foglio-chiudi" class="btn-icona" type="button" aria-label="Chiudi">×</button>
+    </div>
+
+    <div class="correzione">
+      <span class="stato-eti">il treno era più indietro?</span>
+      <div class="chip-riga" id="chip-correzione">
+        <button type="button" data-sec="0" class="sel">ora</button>
+        <button type="button" data-sec="2">−2 s</button>
+        <button type="button" data-sec="5">−5 s</button>
+        <button type="button" data-sec="10">−10 s</button>
+        <button type="button" data-sec="20">−20 s</button>
+      </div>
+    </div>
+
+    <label class="campo">
+      <span>Nota</span>
+      <textarea id="foglio-nota" rows="4" placeholder="Cosa hai osservato in questo punto"></textarea>
+    </label>
+
+    <div class="foglio-azioni">
+      <button id="foglio-elimina" class="btn btn-pericolo" type="button">Elimina</button>
+      <button id="foglio-salva" class="btn btn-primario" type="button">Salva</button>
+    </div>
+  </div>
+</div>
+
+<div id="notifica" class="notifica" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
