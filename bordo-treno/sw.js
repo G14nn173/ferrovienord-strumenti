@@ -2,7 +2,7 @@
  * Strategia: cache-first per gli asset, con aggiornamento in sottofondo.
  * Alzare VERSIONE a ogni rilascio per forzare il ricaricamento dei file. */
 
-const VERSIONE = 'bordo-treno-v3';
+const VERSIONE = 'bordo-treno-v4';
 
 const ASSET = [
   './',

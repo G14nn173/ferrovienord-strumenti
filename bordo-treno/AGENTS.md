@@ -112,9 +112,23 @@ l'interpolazione sbaglierebbe fino a ~700 m su quella tratta. Con un cippo
 ogni km l'errore residuo fra due agganci è sceso a una mediana di 10 m,
 misurato in simulazione a 79 km/h.
 
-## Le quattro difese, e perché servono
+## Le cinque difese, e perché servono
 
 Verificate tutte in simulazione (vedi sezione successiva):
+
+- **Percorso sbagliato selezionato** (`verificaPercorsoPlausibile`): se il GPS
+  resta a più di 3 km dalla polilinea del percorso scelto per 3 fix di
+  seguito, un avviso rosso lo dice esplicitamente invece di tacere. Scoperto
+  da Gianni collaudando sul telefono vero (primo bug trovato fuori
+  simulazione): con GPS a Iseo e percorso "Busto Arsizio Nord - Malpensa"
+  selezionato per errore, l'app continuava a mostrare un km plausibile senza
+  alcun avviso — `ricollocaSeNecessario` esce apposta quando la distanza dalla
+  polilinea supera 1.500 m (per non "correggere" verso un punto assurdo), ma
+  quell'uscita silenziosa lasciava anche il caso "percorso sbagliato" senza
+  alcun segnale. Le due funzioni condividono ora lo stesso `stimaKmDaPosizione`
+  calcolato una sola volta per fix, con soglie diverse e scopi opposti: una
+  tenta la correzione (≤1.500 m), l'altra si limita ad avvisare (>3.000 m,
+  mai a rischio di sovrapporsi).
 
 - **Velocità GPS non credibile** (`velocitaCoerente`): se la strada integrata
   non è compatibile con lo spostamento osservato, si passa al calcolo dalla
@@ -264,4 +278,6 @@ cippi Milano con scoperta e correzione di 6 coordinate PIC inaffidabili
 (Castellanza, Gallarate su questo percorso, Groane, Ceriano Laghetto-Solaro,
 Ceriano Laghetto Parco delle Groane, Seveso Baruccana), oltre alle 3 già note
 (Brescia Violino, Malpensa T2, Bivio/PC Cardano); colonna "Percorso" negli
-export per disambiguare km che si sovrappongono fra percorsi diversi.*
+export per disambiguare km che si sovrappongono fra percorsi diversi; quinta
+difesa contro il percorso selezionato per errore, trovata nel primo collaudo
+su telefono vero.*

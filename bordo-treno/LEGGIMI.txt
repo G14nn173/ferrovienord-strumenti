@@ -90,3 +90,6 @@ LIMITI DA CONOSCERE
 - Alcune fermate non hanno una coordinata attendibile nei dati di partenza
   (es. Brescia Violino, Castellanza, Groane): l'app non le usa per
   l'aggancio automatico, ma il loro km resta corretto.
+- Se scegli il percorso sbagliato per errore, dopo pochi secondi compare un
+  avviso rosso ("hai selezionato il percorso sbagliato"): correggi da
+  "Aggancio manuale" o riavvia scegliendo il percorso giusto.

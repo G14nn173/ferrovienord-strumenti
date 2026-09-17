@@ -25,6 +25,9 @@
   const CHIAVE_RILIEVI  = 'bordo.rilievi.v1';
   const CHIAVE_SESSIONE = 'bordo.sessione.v1';
 
+  const SOGLIA_PERCORSO_SBAGLIATO = 3000;  // m dalla polilinea oltre cui il percorso scelto è verosimilmente quello sbagliato
+  const CONFERME_PERCORSO_SBAGLIATO = 3;   // fix consecutivi lontani, prima di avvisare (un singolo fix può essere un abbaglio)
+
   const RAGGIO_AGGANCIO = 300;   // m — entro cui una località è candidata all'aggancio
   const USCITA_AGGANCIO = 420;   // m — oltre cui l'aggancio viene chiuso
   const RISALITA_MINIMA = 30;    // m — risalita dopo il minimo che conferma il transito
@@ -78,6 +81,9 @@
     progressivaPersa: false,  // la stima è stata troncata: serve una ricollocazione
     stimata: false,           // km ricostruito dalla posizione, non ancora agganciato
     fuoriRotta: 0,            // fix consecutivi incoerenti con la progressiva
+    fuoriPercorso: false,     // il GPS è lontano dal percorso scelto: probabile errore di selezione
+    fuoriPercorsoContatore: 0,
+    distanzaPercorsoM: null,  // ultima distanza nota dalla polilinea del percorso attivo
     watchId: null,
     wakeLock: null,
     tickId: null,
@@ -471,6 +477,8 @@
     S.stimata = false;
     S.progressivaPersa = false;
     S.fuoriRotta = 0;
+    S.fuoriPercorso = false;
+    S.fuoriPercorsoContatore = 0;
     if (!cambioPercorso && precedente && precedente.km !== punto.km) {
       S.verso = punto.km > precedente.km ? 1 : -1;
     }
@@ -520,8 +528,7 @@
   /* Il caso pericoloso: il treno supera una località mentre il GPS tace, quindi
    * nessun aggancio scatta, e al ritorno del segnale l'app mostrerebbe una
    * pastiglia verde sopra una progressiva sbagliata di oltre un chilometro. */
-  function ricollocaSeNecessario(lat, lon) {
-    const stima = stimaKmDaPosizione(lat, lon);
+  function ricollocaSeNecessario(stima) {
     if (!stima || stima.d > 1500) return;    // troppo lontano dalla linea per fidarsi
 
     if (S.progressivaPersa) {
@@ -544,6 +551,25 @@
     } else {
       S.fuoriRotta = 0;
     }
+  }
+
+  /* Il caso opposto di ricollocaSeNecessario: qui il GPS non è "un po' incoerente
+   * col km", è a chilometri di distanza dall'INTERO percorso scelto — quasi
+   * certamente perché il manutentore ha selezionato la linea sbagliata (es.
+   * selezionata "Busto Arsizio Nord - Malpensa" mentre il treno è a Iseo).
+   * Nessun tentativo di correggere da sola: solo un avviso esplicito, perché
+   * qui la stima sulla polilinea del percorso sbagliato non ha alcun senso e
+   * andrebbe ignorata, non usata per "aggiustare" il km. */
+  function verificaPercorsoPlausibile(stima) {
+    if (!stima) return;
+    S.distanzaPercorsoM = stima.d;
+    if (stima.d <= SOGLIA_PERCORSO_SBAGLIATO) {
+      S.fuoriPercorsoContatore = 0;
+      S.fuoriPercorso = false;
+      return;
+    }
+    S.fuoriPercorsoContatore += 1;
+    if (S.fuoriPercorsoContatore >= CONFERME_PERCORSO_SBAGLIATO) S.fuoriPercorso = true;
   }
 
   /* L'odometria si regge sulla velocità dichiarata dal GPS. Alcuni dispositivi
@@ -578,7 +604,9 @@
     if (v == null) v = S.ultimaVel;
 
     avanza(t, v);
-    ricollocaSeNecessario(c.latitude, c.longitude);
+    const stima = stimaKmDaPosizione(c.latitude, c.longitude);
+    ricollocaSeNecessario(stima);
+    verificaPercorsoPlausibile(stima);
     memorizza(t, c.latitude, c.longitude, c.accuracy, v);
 
     if (!S.velocitaSospetta && daGps != null && !velocitaCoerente(t, c.latitude, c.longitude)) {
@@ -662,6 +690,9 @@
     S.progressivaPersa = false;
     S.stimata = false;
     S.fuoriRotta = 0;
+    S.fuoriPercorso = false;
+    S.fuoriPercorsoContatore = 0;
+    S.distanzaPercorsoM = null;
     S.attivo = true;
 
     S.watchId = navigator.geolocation.watchPosition(suFix, suErroreGps, {
@@ -751,6 +782,21 @@
   function disegnaAvviso() {
     const el = $('#avviso-deriva');
     if (!S.attivo) { el.hidden = true; return; }
+
+    /* Priorità massima: se il GPS è a chilometri dall'intero percorso scelto,
+     * nessun altro avviso ha senso — il numero a schermo non c'entra nulla
+     * con dove sei davvero. Va segnalato in modo inequivocabile, non con la
+     * stessa formula usata per una semplice deriva sul percorso giusto. */
+    if (S.fuoriPercorso) {
+      el.hidden = false;
+      el.classList.add('avviso-grave');
+      const km = S.distanzaPercorsoM != null ? metriTesto(S.distanzaPercorsoM) : 'più chilometri';
+      el.textContent = `Il GPS è a ${km} dal percorso "${S.percorso.nome}": molto probabilmente ` +
+                       `hai selezionato il percorso sbagliato. Fermati e correggi da "Aggancio manuale", ` +
+                       `oppure riavvia scegliendo il percorso giusto.`;
+      return;
+    }
+    el.classList.remove('avviso-grave');
 
     if (S.qualita === 'assente' && S.ultimoFix) {
       el.hidden = false;

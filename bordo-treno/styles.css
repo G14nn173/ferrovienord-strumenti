@@ -133,6 +133,12 @@ main{padding:12px 16px calc(var(--barra-h) + 24px + env(safe-area-inset-bottom))
 .avviso{
   border:1px solid rgba(255,191,71,.4);background:rgba(255,191,71,.08);
   color:var(--amber);border-radius:12px;padding:11px 13px;font-size:13px;margin-bottom:14px;
+  font-weight:600;
+}
+/* percorso quasi certamente sbagliato: piu' grave di una semplice deriva,
+   colore rosso invece di ambra per non confonderla con gli altri avvisi */
+.avviso.avviso-grave{
+  border-color:rgba(255,107,94,.5);background:rgba(255,107,94,.1);color:var(--rosso);
 }
 
 /* ------------------------------ controlli ------------------------------ */
