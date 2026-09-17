@@ -1,4 +1,11 @@
-/* Rilievi di bordo — Brescia · Iseo · Edolo
+/* Rilievi di bordo — Rete FERROVIENORD
+ *
+ * L'app copre più percorsi (rami Iseo e Milano): il manutentore ne sceglie
+ * uno all'avvio, e può cambiarlo in corsa dal riquadro "Aggancio manuale" nei
+ * punti dove la linea si dirama (es. Saronno). Ogni percorso ha una propria
+ * progressiva chilometrica, non necessariamente a partire da zero (vedi
+ * S.kmMin/S.kmMax) — motivo per cui i limiti non sono mai scritti come 0 nel
+ * codice sottostante, ma sempre relativi al percorso attivo.
  *
  * Calcolo della progressiva, per odometria ancorata:
  *   - passando accanto a un cippo chilometrico censito il km viene riportato al
@@ -45,16 +52,19 @@
   // -------------------------------- stato ---------------------------------
 
   const S = {
-    linea: null,
+    rete: null,           // { meta, percorsi: [...] }, l'intero rete.json
+    percorso: null,       // il percorso attualmente selezionato
     punti: [],
     localita: [],        // stazioni, fermate, capotronco
     cippi: [],           // cippi chilometrici georeferenziati
     polilinea: [],       // geometria della linea usata per le proiezioni
+    kmMin: 0,            // estremi del percorso attivo (non sempre 0..lunghezza)
+    kmMax: 0,
     sosta: null,         // fermata in località in corso
     rilievi: [],
     attivo: false,
     km: null,
-    verso: 1,            // +1 verso Edolo, −1 verso Brescia
+    verso: 1,            // +1 verso l'estremo di km maggiore, -1 verso l'altro
     tRef: null,          // istante fino a cui il km è integrato
     ultimaVel: 0,
     ultimoFix: null,
@@ -123,7 +133,7 @@
 
   function nomeFile(estensione) {
     const d = new Date(), p = (n) => String(n).padStart(2, '0');
-    return `rilievi-BIE-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}` +
+    return `rilievi-FN-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}` +
            `-${p(d.getHours())}${p(d.getMinutes())}.${estensione}`;
   }
 
@@ -166,6 +176,7 @@
   function salvaSessione() {
     try {
       localStorage.setItem(CHIAVE_SESSIONE, JSON.stringify({
+        percorsoId: S.percorso ? S.percorso.id : null,
         km: S.km, verso: S.verso, ancora: S.ancora, t: Date.now()
       }));
     } catch { /* non essenziale */ }
@@ -247,15 +258,29 @@
     } catch { /* ignora */ }
   }
 
-  // --------------------------- dati della linea ---------------------------
+  // --------------------------- dati della rete -----------------------------
 
-  async function caricaLinea() {
-    const r = await fetch('dati/linea-bie.json', { cache: 'no-cache' });
-    if (!r.ok) throw new Error('linea-bie.json non raggiungibile');
-    S.linea = await r.json();
-    S.punti = S.linea.punti.slice().sort((a, b) => a.km - b.km);
+  async function caricaRete() {
+    const r = await fetch('dati/rete.json', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('rete.json non raggiungibile');
+    S.rete = await r.json();
+    S.rete.percorsi.sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
+  }
+
+  const trovaPercorso = (id) => S.rete.percorsi.find((p) => p.id === id) || null;
+
+  /** Attiva un percorso: ricalcola tutte le strutture derivate che il motore
+   *  di posizione usa. Non tocca km/verso/ancora — quello lo fa chi chiama
+   *  (avvio da zero, o cambio percorso a treno in corsa). */
+  function selezionaPercorso(percorso) {
+    S.percorso = percorso;
+    S.punti = percorso.punti.slice().sort((a, b) => a.km - b.km);
     S.localita = S.punti.filter((p) => TIPI_LOCALITA.includes(p.tipo));
     S.cippi = S.punti.filter((p) => p.tipo === 'cippo' && p.lat != null);
+
+    const kmDeiPunti = S.punti.map((p) => p.km);
+    S.kmMin = Math.min(...kmDeiPunti);
+    S.kmMax = Math.max(...kmDeiPunti);
 
     /* Spina dorsale geometrica della linea. I cippi sono censiti ogni
      * chilometro e rilevati sul posto: sono molto più fitti e più affidabili
@@ -265,7 +290,7 @@
       : S.localita.filter((p) => p.lat != null && p.coordAffidabile !== false);
   }
 
-  const lunghezza = () => (S.linea ? S.linea.meta.lunghezzaKm : 0);
+  const lunghezza = () => (S.percorso ? S.kmMax - S.kmMin : 0);
 
   /** Punti a km noto e coordinata attendibile, usati per riagganciare. */
   const puntiAggancio = () =>
@@ -306,7 +331,7 @@
     if (dt <= 0) { S.ultimaVel = v; return; }
     if (dt > 30) dt = 30;                      // dopo una sospensione non inventiamo strada
     const media = (S.ultimaVel + v) / 2;
-    S.km = limita(S.km + S.verso * media * dt / 1000, 0, lunghezza());
+    S.km = limita(S.km + S.verso * media * dt / 1000, S.kmMin, S.kmMax);
     S.tRef = t;
     S.ultimaVel = v;
   }
@@ -409,7 +434,7 @@
     const delta = punto.km - kmMisurato;       // in km
     const precedente = S.ancora;
 
-    S.km = limita(S.km + delta, 0, lunghezza());
+    S.km = limita(S.km + delta, S.kmMin, S.kmMax);
     S.ancora = { nome: punto.nome, km: punto.km, t };
     S.scarto = delta * 1000;
     S.stimata = false;                         // da qui il km torna quello ufficiale
@@ -428,8 +453,16 @@
     disegnaAvviso();
   }
 
-  function agganciaManuale(punto) {
+  /** Aggancio manuale sulla località scelta. Se `percorso` è diverso da
+   *  quello attivo (bivio superato, es. a Saronno), cambia anche quello: le
+   *  due scale di km non sono confrontabili fra loro, quindi in quel caso il
+   *  verso di marcia va lasciato come sta invece di dedurlo dall'ancora
+   *  precedente — la potrà correggere l'operatore al prossimo aggancio. */
+  function agganciaManuale(percorso, punto) {
+    const cambioPercorso = !S.percorso || percorso.id !== S.percorso.id;
     const precedente = S.ancora;
+    if (cambioPercorso) selezionaPercorso(percorso);
+
     S.km = punto.km;
     S.ancora = { nome: punto.nome, km: punto.km, t: Date.now() };
     S.candidato = null;
@@ -438,12 +471,16 @@
     S.stimata = false;
     S.progressivaPersa = false;
     S.fuoriRotta = 0;
-    if (precedente && precedente.km !== punto.km) {
+    if (!cambioPercorso && precedente && precedente.km !== punto.km) {
       S.verso = punto.km > precedente.km ? 1 : -1;
     }
+
+    if (cambioPercorso) { disegnaFonti(); disegnaLinea(); }
     salvaSessione();
     disegna();
-    notifica(`Agganciato a ${punto.nome} — km ${kmDecimale(punto.km)}`);
+    notifica(cambioPercorso
+      ? `Percorso cambiato: ${percorso.nome}. Agganciato a ${punto.nome} — km ${kmDecimale(punto.km)}`
+      : `Agganciato a ${punto.nome} — km ${kmDecimale(punto.km)}`);
   }
 
   function qualitaDa(acc) {
@@ -560,7 +597,8 @@
       tracciaAggiungi({
         t, lat: +c.latitude.toFixed(6), lon: +c.longitude.toFixed(6),
         acc: c.accuracy == null ? null : Math.round(c.accuracy),
-        v: +v.toFixed(2), km: S.km == null ? null : +S.km.toFixed(4)
+        v: +v.toFixed(2), km: S.km == null ? null : +S.km.toFixed(4),
+        percorsoId: S.percorso ? S.percorso.id : null
       });
     }
 
@@ -602,12 +640,13 @@
 
   // ----------------------------- avvio / stop -----------------------------
 
-  async function avvia(puntoPartenza, verso) {
+  async function avvia(percorso, puntoPartenza, verso) {
     if (!('geolocation' in navigator)) {
       notifica('Questo dispositivo non espone il GPS al browser.');
       return;
     }
 
+    selezionaPercorso(percorso);
     S.km = puntoPartenza.km;
     S.verso = verso;
     S.ancora = { nome: puntoPartenza.nome, km: puntoPartenza.km, t: Date.now() };
@@ -636,6 +675,10 @@
 
     $('#avvio').hidden = true;
     $('#pannello').hidden = false;
+    $('#sel-percorso-cambio').value = S.percorso.id;
+    $('#sel-aggancio').innerHTML = opzioniLocalita(S.percorso);
+    disegnaFonti();
+    disegnaLinea();
     salvaSessione();
     disegna();
   }
@@ -663,9 +706,16 @@
     }
     $('#pill-gps-testo').textContent = testo;
 
-    $('#etichetta-verso').textContent = S.attivo
-      ? (S.verso > 0 ? 'marcia verso Edolo' : 'marcia verso Brescia')
-      : 'rilevamento non avviato';
+    if (S.percorso) $('#testata-titolo').textContent = S.percorso.nome;
+
+    if (S.attivo && S.localita.length) {
+      const basso = S.localita[0], alto = S.localita[S.localita.length - 1];
+      $('#etichetta-verso').textContent = `marcia verso ${S.verso > 0 ? alto.nome : basso.nome}`;
+      $('#km-estremo-basso').textContent = `${basso.nome} ${kmDecimale(basso.km)}`;
+      $('#km-estremo-alto').textContent = `${alto.nome} ${kmDecimale(alto.km)}`;
+    } else {
+      $('#etichetta-verso').textContent = 'rilevamento non avviato';
+    }
 
     if (!S.attivo || S.km == null) return;
 
@@ -680,7 +730,7 @@
     $('#km-cippo').textContent =
       `cippo ${cippo} · ${metriDalCippo} m oltre · prossimo cippo fra ${alProssimo} m`;
 
-    $('#km-avanzamento').style.width = (S.km / lunghezza() * 100).toFixed(2) + '%';
+    $('#km-avanzamento').style.width = ((S.km - S.kmMin) / lunghezza() * 100).toFixed(2) + '%';
 
     const { prec, succ } = contesto(S.km);
     $('#st-tratta').textContent = prec && succ ? `${prec.nome} → ${succ.nome}`
@@ -759,6 +809,8 @@
     return {
       id: S.bozza ? S.bozza.id : ('r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)),
       ts: S.bozza ? S.bozza.ts : Date.now(),
+      percorsoId: S.bozza ? S.bozza.percorsoId : (S.percorso ? S.percorso.id : null),
+      percorsoNome: S.bozza ? S.bozza.percorsoNome : (S.percorso ? S.percorso.nome : ''),
       km: +km.toFixed(4),
       cippo: cippoDi(km),
       metriDalCippo: Math.round((km - Math.floor(km)) * 1000),
@@ -835,7 +887,7 @@
         <div class="voce-km">${escHtml(formattaKm(r.km))}</div>
         <div class="voce-corpo">
           <div class="voce-titolo">cippo ${r.cippo} · ${r.metriDalCippo} m</div>
-          <div class="voce-sub">${escHtml(oraLocale(r.ts))}${ctx.length ? ' · ' + escHtml(ctx.join(' · ')) : ''}</div>
+          <div class="voce-sub">${escHtml(r.percorsoNome || '—')} · ${escHtml(oraLocale(r.ts))}${ctx.length ? ' · ' + escHtml(ctx.join(' · ')) : ''}</div>
           ${r.nota ? `<div class="voce-nota">${escHtml(r.nota)}</div>` : ''}
         </div>
       </div>`;
@@ -843,6 +895,8 @@
   }
 
   function disegnaLinea() {
+    $('#linea-percorso-corrente').textContent = S.percorso
+      ? `Percorso: ${S.percorso.nome}` : 'Nessun percorso selezionato';
     const f = S.filtroLinea;
     const punti = S.punti.filter((p) => {
       if (f === 'tutti') return true;
@@ -882,28 +936,64 @@
     }).join('');
   }
 
-  function riempiTendine() {
-    const opzioni = S.localita
+  /** Località (ordinate per km) di un percorso, a partire dal suo oggetto —
+   *  usata anche PRIMA che quel percorso sia quello attivo (S.percorso). */
+  function localitaDiPercorso(percorso) {
+    return percorso.punti.filter((p) => TIPI_LOCALITA.includes(p.tipo)).sort((a, b) => a.km - b.km);
+  }
+
+  function opzioniLocalita(percorso) {
+    return localitaDiPercorso(percorso)
       .map((p) => `<option value="${p.km}">${escHtml(p.nome)} — km ${escHtml(kmDecimale(p.km))}</option>`)
       .join('');
-    $('#sel-partenza').innerHTML = opzioni;
-    $('#sel-aggancio').innerHTML = opzioni;
+  }
+
+  function riempiSelettorePercorsi(sel) {
+    sel.innerHTML = S.rete.percorsi
+      .map((p) => `<option value="${escHtml(p.id)}">${escHtml(p.nome)}</option>`)
+      .join('');
+  }
+
+  /** Aggiorna le etichette "verso X" sulla schermata di partenza in base al
+   *  percorso scelto lì, prima ancora di avviare il rilevamento. */
+  function aggiornaVersoAvvio(percorso) {
+    const loc = localitaDiPercorso(percorso);
+    if (!loc.length) return;
+    const basso = loc[0], alto = loc[loc.length - 1];
+    const bottoni = $$('#sel-verso button');
+    bottoni[0].textContent = `verso ${alto.nome}`;
+    bottoni[1].textContent = `verso ${basso.nome}`;
+  }
+
+  /** Prepara i due <select> di percorso e, per ciascuno, il suo elenco di
+   *  località dipendente (partenza / aggancio), inizializzati su `percorso`. */
+  function riempiTendine(percorso) {
+    riempiSelettorePercorsi($('#sel-percorso'));
+    riempiSelettorePercorsi($('#sel-percorso-cambio'));
+    $('#sel-percorso').value = percorso.id;
+    $('#sel-percorso-cambio').value = percorso.id;
+    $('#sel-partenza').innerHTML = opzioniLocalita(percorso);
+    $('#sel-aggancio').innerHTML = opzioniLocalita(percorso);
+    aggiornaVersoAvvio(percorso);
   }
 
   function disegnaFonti() {
-    const m = S.linea.meta;
+    const m = S.rete.meta;
+    const p = S.percorso;
     $('#fonti').innerHTML = `
-      <dt>Progressive chilometriche</dt><dd>${escHtml(m.fonteKm)}</dd>
-      <dt>Origine</dt><dd>${escHtml(m.origine)} — ${escHtml(m.riferimentoKm)}</dd>
+      <dt>Percorso attivo</dt><dd>${p ? escHtml(p.nome) : '—'}</dd>
+      <dt>Progressive chilometriche</dt><dd>${p ? escHtml(p.fonteKm) : '—'}</dd>
+      <dt>Origine</dt><dd>${p ? escHtml(p.origine) : '—'}</dd>
+      ${p && p.nota ? `<dt>Nota sul percorso</dt><dd>${escHtml(p.nota)}</dd>` : ''}
       <dt>Coordinate delle località</dt><dd>${escHtml(m.fonteCoord)}</dd>
-      <dt>Verso</dt><dd>${escHtml(m.verso)}</dd>
+      <dt>Cippi chilometrici</dt><dd>${escHtml(m.fonteCippi)}</dd>
       <dt>Dati generati il</dt><dd>${escHtml(m.generato)}</dd>`;
   }
 
   // -------------------------------- export --------------------------------
 
   const COLONNE = [
-    'Data e ora', 'km', 'Progressiva', 'Cippo', 'm dal cippo', 'Nota',
+    'Percorso', 'Data e ora', 'km', 'Progressiva', 'Cippo', 'm dal cippo', 'Nota',
     'Località precedente', 'km prec.', 'Località successiva', 'km succ.',
     'Punto notevole vicino', 'Distanza (m)', 'Latitudine', 'Longitudine',
     'Precisione GPS (m)', 'Velocità (km/h)', 'Qualità posizione',
@@ -911,6 +1001,7 @@
   ];
 
   const righeRilievi = () => S.rilievi.slice().reverse().map((r) => ([
+    r.percorsoNome || '',
     oraLocale(r.ts),
     r.km,
     formattaKm(r.km),
@@ -951,7 +1042,7 @@
   function blobGeoJson() {
     const fc = {
       type: 'FeatureCollection',
-      name: 'Rilievi Brescia-Iseo-Edolo',
+      name: 'Rilievi rete FERROVIENORD',
       crs: { type: 'name', properties: { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
       features: S.rilievi.slice().reverse()
         .filter((r) => r.lat != null && r.lon != null)
@@ -959,6 +1050,7 @@
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [r.lon, r.lat] },
           properties: {
+            percorso: r.percorsoNome || null,
             data_ora: oraLocale(r.ts), km: r.km, progressiva: formattaKm(r.km),
             cippo: r.cippo, m_dal_cippo: r.metriDalCippo, nota: r.nota || '',
             localita_precedente: r.precedente ? r.precedente.nome : null,
@@ -1146,7 +1238,7 @@
       new File([blobGeoJson()], nomeFile('geojson'), { type: 'application/geo+json' })
     ];
     try {
-      await navigator.share({ files, title: 'Rilievi Brescia-Iseo-Edolo' });
+      await navigator.share({ files, title: 'Rilievi rete FERROVIENORD' });
     } catch (e) {
       if (e && e.name !== 'AbortError') notifica('Condivisione non riuscita: usa i pulsanti di scaricamento.');
     }
@@ -1157,7 +1249,7 @@
     if (!punti.length) { notifica('Nessuna traccia registrata.'); return; }
     const fc = {
       type: 'FeatureCollection',
-      name: 'Traccia GPS Brescia-Iseo-Edolo',
+      name: 'Traccia GPS - ' + (S.percorso ? S.percorso.nome : 'percorso sconosciuto'),
       features: [{
         type: 'Feature',
         geometry: { type: 'LineString', coordinates: punti.map((p) => [p.lon, p.lat]) },
@@ -1185,6 +1277,18 @@
       });
     }));
 
+    $('#sel-percorso').addEventListener('change', () => {
+      const percorso = trovaPercorso($('#sel-percorso').value);
+      if (!percorso) return;
+      $('#sel-partenza').innerHTML = opzioniLocalita(percorso);
+      aggiornaVersoAvvio(percorso);
+    });
+
+    $('#sel-percorso-cambio').addEventListener('change', () => {
+      const percorso = trovaPercorso($('#sel-percorso-cambio').value);
+      if (percorso) $('#sel-aggancio').innerHTML = opzioniLocalita(percorso);
+    });
+
     $$('#filtri-linea button').forEach((b) => b.addEventListener('click', () => {
       $$('#filtri-linea button').forEach((x) => x.classList.toggle('sel', x === b));
       S.filtroLinea = b.dataset.filtro;
@@ -1192,16 +1296,20 @@
     }));
 
     $('#btn-avvia').addEventListener('click', () => {
+      const percorso = trovaPercorso($('#sel-percorso').value) || S.rete.percorsi[0];
+      const loc = localitaDiPercorso(percorso);
       const km = parseFloat($('#sel-partenza').value);
-      const punto = S.localita.find((p) => p.km === km) || S.localita[0];
+      const punto = loc.find((p) => p.km === km) || loc[0];
       const verso = parseInt($('#sel-verso button.sel').dataset.verso, 10);
-      avvia(punto, verso);
+      avvia(percorso, punto, verso);
     });
 
     $('#btn-aggancia').addEventListener('click', () => {
+      const percorso = trovaPercorso($('#sel-percorso-cambio').value);
+      if (!percorso) return;
       const km = parseFloat($('#sel-aggancio').value);
-      const punto = S.localita.find((p) => p.km === km);
-      if (punto) agganciaManuale(punto);
+      const punto = localitaDiPercorso(percorso).find((p) => p.km === km);
+      if (punto) agganciaManuale(percorso, punto);
     });
 
     $('#btn-registra').addEventListener('click', apriFoglio);
@@ -1291,17 +1399,23 @@
 
   async function inizia() {
     try {
-      await caricaLinea();
+      await caricaRete();
     } catch (e) {
       document.body.innerHTML =
         '<p style="padding:32px;font:16px system-ui;color:#eef7fa">' +
-        'Dati della linea non caricati. L\'app va aperta da un server web ' +
+        'Dati della rete non caricati. L\'app va aperta da un server web ' +
         '(HTTPS o localhost), non con un doppio clic sul file.</p>';
       return;
     }
 
     caricaRilievi();
-    riempiTendine();
+
+    // una sessione recente riparte dallo stesso percorso e dallo stesso punto
+    const sess = leggiSessione();
+    const percorsoIniziale = (sess && trovaPercorso(sess.percorsoId)) || S.rete.percorsi[0];
+    selezionaPercorso(percorsoIniziale);   // solo per popolare le schede Linea/Dati: il rilevamento non è ancora attivo
+
+    riempiTendine(percorsoIniziale);
     disegnaRilievi();
     disegnaLinea();
     disegnaFonti();
@@ -1314,8 +1428,6 @@
     S.traccia.conta = await tracciaConta();
     $('#st-traccia').textContent = S.traccia.conta.toLocaleString('it-IT');
 
-    // una sessione recente propone il punto di ripartenza già impostato
-    const sess = leggiSessione();
     if (sess && sess.ancora) {
       const opt = Array.from($('#sel-partenza').options)
         .find((o) => Math.abs(parseFloat(o.value) - sess.ancora.km) < 1e-6);

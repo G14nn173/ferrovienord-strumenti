@@ -2,7 +2,7 @@
  * Strategia: cache-first per gli asset, con aggiornamento in sottofondo.
  * Alzare VERSIONE a ogni rilascio per forzare il ricaricamento dei file. */
 
-const VERSIONE = 'bordo-treno-v2';
+const VERSIONE = 'bordo-treno-v3';
 
 const ASSET = [
   './',
@@ -10,7 +10,7 @@ const ASSET = [
   './styles.css',
   './app.js',
   './manifest.webmanifest',
-  './dati/linea-bie.json',
+  './dati/rete.json',
   './icone/icona.svg',
   './icone/icona-192.png',
   './icone/icona-512.png'

@@ -138,6 +138,7 @@ main{padding:12px 16px calc(var(--barra-h) + 24px + env(safe-area-inset-bottom))
 /* ------------------------------ controlli ------------------------------ */
 
 .campo{display:block;margin-bottom:14px}
+.campo-stretto{margin-bottom:8px}
 .campo>span{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
 
 select,textarea{

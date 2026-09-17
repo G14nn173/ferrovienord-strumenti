@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Rilievi di bordo — Brescia · Iseo · Edolo</title>
+<title>Rilievi di bordo — Rete FERROVIENORD</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icone/icona.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icone/icona-192.png">
@@ -17,7 +17,7 @@
 
 <header class="testata">
   <div class="testata-linea">
-    <strong>Brescia · Iseo · Edolo</strong>
+    <strong id="testata-titolo">Rete FERROVIENORD</strong>
     <span id="etichetta-verso" class="verso">—</span>
   </div>
   <button id="pill-gps" class="pill pill-assente" type="button" aria-live="polite">
@@ -32,7 +32,11 @@
 
     <div id="avvio" class="scheda scheda-avvio">
       <h2>Prima di partire</h2>
-      <p class="nota">Indica da dove parte il treno: serve per agganciare la progressiva ai km ufficiali del Fascicolo.</p>
+      <p class="nota">Indica su che percorso sei e da dove parte il treno: serve per agganciare la progressiva ai km ufficiali del Fascicolo.</p>
+      <label class="campo">
+        <span>Percorso</span>
+        <select id="sel-percorso"></select>
+      </label>
       <label class="campo">
         <span>Località di partenza</span>
         <select id="sel-partenza"></select>
@@ -40,8 +44,8 @@
       <label class="campo">
         <span>Direzione di marcia</span>
         <div class="segmentato" id="sel-verso" role="radiogroup" aria-label="Direzione di marcia">
-          <button type="button" data-verso="1" role="radio" aria-checked="true" class="sel">verso Edolo</button>
-          <button type="button" data-verso="-1" role="radio" aria-checked="false">verso Brescia</button>
+          <button type="button" data-verso="1" role="radio" aria-checked="true" class="sel">—</button>
+          <button type="button" data-verso="-1" role="radio" aria-checked="false">—</button>
         </div>
       </label>
       <button id="btn-avvia" class="btn btn-primario" type="button">Avvia rilevamento</button>
@@ -54,7 +58,7 @@
         <div id="km-grande" class="km-grande">—</div>
         <div id="km-cippo" class="km-cippo">in attesa del primo aggancio</div>
         <div class="km-barra" aria-hidden="true"><div id="km-avanzamento"></div></div>
-        <div class="km-estremi"><span>Brescia 0</span><span>Edolo 102,709</span></div>
+        <div class="km-estremi"><span id="km-estremo-basso">—</span><span id="km-estremo-alto">—</span></div>
       </div>
 
       <button id="btn-registra" class="btn-registra" type="button">
@@ -73,7 +77,11 @@
 
       <div class="scheda scheda-manuale">
         <h3>Aggancio manuale</h3>
-        <p class="nota">Se il km a schermo non corrisponde alla realtà, riallinealo su una località appena superata.</p>
+        <p class="nota">Se il km a schermo non corrisponde alla realtà, riallinealo su una località appena superata. Ai bivi (es. Saronno) cambia qui anche il percorso, prima di scegliere la località.</p>
+        <label class="campo campo-stretto">
+          <span>Percorso</span>
+          <select id="sel-percorso-cambio"></select>
+        </label>
         <div class="riga-manuale">
           <select id="sel-aggancio"></select>
           <button id="btn-aggancia" class="btn" type="button">Aggancia</button>
@@ -98,6 +106,7 @@
       <h2>Linea</h2>
       <span id="conta-punti" class="badge">0</span>
     </div>
+    <p class="nota" id="linea-percorso-corrente">—</p>
     <div class="filtri" id="filtri-linea">
       <button type="button" data-filtro="tutti" class="sel">Tutti</button>
       <button type="button" data-filtro="localita">Località</button>

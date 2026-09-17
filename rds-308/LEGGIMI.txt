@@ -1,0 +1,69 @@
+FERROVIENORD - RDS MOD. 0308 (Registro delle Disposizioni di Servizio)
+=======================================================================
+
+COS'E'
+App per compilare e modificare il Registro delle Disposizioni di Servizio
+(Modulo 0308), secondo la struttura dell'Allegato 10 della normativa ISD e
+la prassi osservata negli RDS reali di Ferrovienord.
+
+AVVIO
+1. Aprire la cartella "rds-308".
+2. Fare doppio clic su "Avvia RDS.cmd".
+3. Lasciare aperta la finestra del server finche' si usa l'app.
+4. Per chiudere, premere Ctrl+C nella finestra del server oppure chiuderla.
+
+REQUISITI
+- Windows 10 o Windows 11.
+- Un browser moderno (Edge, Chrome, Firefox).
+- PowerShell, gia' incluso in Windows.
+- Non sono richiesti Node.js, npm, installazioni o collegamento Internet.
+
+USO — PARTIRE DA UN RDS GIA' ESISTENTE (caso piu' comune)
+1. Scaricare il file .docx del RDS da modificare (es. da SharePoint) sul PC.
+2. Dall'elenco iniziale premere "Importa da Word (.docx)" e selezionare il
+   file.
+3. Scegliere il tipo di documento (Stazione/Bivio oppure Posto di servizio,
+   in base a quale corrisponde al file) e confermare.
+4. L'app riconosce automaticamente titoli di sezione, tabelle (binari,
+   deviatoi, PL, segnali, aggiornamenti, ecc.), il blocco Generalita' e i
+   dati di copertina (edizione, aggiornamento, data). Al termine mostra
+   l'elenco dei punti da controllare a mano (es. tabelle non riconosciute,
+   testo senza sezione corrispondente).
+5. Verificare e correggere i campi importati, poi salvare normalmente.
+
+L'importazione e' automatica ma "best effort": funziona bene quando il
+documento segue la struttura standard (titoli di sezione riconoscibili,
+tabelle con lo stesso ordine di colonne), ma testi scritti in modo molto
+diverso dal solito possono finire nella sezione sbagliata o restare non
+assegnati — vanno sempre ricontrollati prima di considerare il documento
+definitivo.
+
+USO — CREARE UN RDS NUOVO DA ZERO
+1. Dall'elenco iniziale, scegliere il tipo di documento e inserire la
+   denominazione, poi premere "Crea nuovo RDS".
+2. Compilare i campi di ogni sezione. Le sezioni non applicabili possono
+   essere marcate "Non applicabile (Per memoria)": in stampa comparira'
+   automaticamente la dicitura "Per memoria.", come nei documenti ufficiali.
+
+IN ENTRAMBI I CASI
+- Le modifiche si salvano automaticamente nel browser (localStorage) del
+  PC in uso. Usare "Esporta JSON" per salvare una copia del documento come
+  file, da poter riaprire con "Importa JSON" su qualunque PC o come backup.
+- "Stampa / PDF" apre la finestra di stampa del browser con
+  l'impaginazione del documento (frontespizio, generalita', tabelle);
+  scegliere "Salva come PDF" per ottenere il file PDF.
+
+NOTE E LIMITI DELLA VERSIONE ATTUALE
+- I dati restano nel browser del PC in uso (localStorage): non c'e' un
+  archivio condiviso in rete. Usare "Esporta JSON" per condividere o
+  archiviare i documenti altrove (es. cartella di rete, SharePoint).
+- Nei documenti ufficiali il timbro "Edizione / Aggiornamento / Data" e'
+  ripetuto su ogni pagina e cambia in base a quali pagine sono state
+  ristampate a ogni aggiornamento. In questa versione il timbro e' unico
+  per l'intero documento (frontespizio); la tabella "Aggiornamenti" resta
+  comunque disponibile per tenere lo storico completo delle revisioni.
+- L'esportazione e' pensata per stampa/PDF fedele al layout. Un'eventuale
+  esportazione diretta in formato .docx puo' essere aggiunta in seguito.
+- L'importazione legge solo file .docx (non .pdf): i .docx sono quelli
+  modificabili su SharePoint, i .pdf sono in genere l'esportazione finale
+  dello stesso documento.

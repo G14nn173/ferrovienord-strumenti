@@ -1,7 +1,7 @@
 {
-  "name": "Rilievi di bordo — Brescia · Iseo · Edolo",
-  "short_name": "Rilievi BIE",
-  "description": "Registrazione della progressiva chilometrica e del cippo km dal treno in marcia, sulla linea Brescia - Iseo - Edolo.",
+  "name": "Rilievi di bordo — Rete FERROVIENORD",
+  "short_name": "Rilievi FN",
+  "description": "Registrazione della progressiva chilometrica e del cippo km dal treno in marcia, sui rami Iseo e Milano della rete FERROVIENORD.",
   "lang": "it",
   "dir": "ltr",
   "start_url": "./index.html",

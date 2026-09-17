@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071824">
+  <title>FERROVIENORD — RDS Mod. 0308</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-title">
+      <strong>FERROVIENORD</strong>
+      <span>Registro delle Disposizioni di Servizio — Mod. 0308</span>
+    </div>
+    <div class="topbar-actions" id="topbar-actions"></div>
+  </header>
+
+  <div id="fallback-notice" style="max-width:640px;margin:40px auto;padding:20px 24px;border:2px solid #b3261e;border-radius:10px;background:#fff2f1;font-family:Segoe UI,Arial,sans-serif;color:#16232c;line-height:1.5;">
+    <h1 style="margin-top:0;font-size:1.1rem;">Avvia l'app dal launcher, non aprendo questo file</h1>
+    <p>Se stai leggendo questo messaggio (senza stile grafico intorno), il browser ha aperto
+    <b>index.html</b> come file locale e ha bloccato script e fogli di stile: per questo la pagina resta
+    vuota o non formattata.</p>
+    <p><b>Chiudi questa scheda</b> e nella cartella <b>rds-308</b> fai doppio clic su
+    <b>Avvia RDS.cmd</b>: si apre una finestra nera (lasciala aperta) e il browser si apre da solo
+    all'indirizzo corretto, con l'app funzionante.</p>
+  </div>
+
+  <main id="app">
+    <section id="view-list" class="view"></section>
+    <section id="view-editor" class="view" hidden>
+      <aside id="editor-toc" class="editor-toc"></aside>
+      <div class="editor-main">
+        <div id="editor-meta" class="editor-meta"></div>
+        <div class="editor-part">
+          <h2 class="part-title">PARTE PRIMA</h2>
+          <div id="editor-parte1"></div>
+        </div>
+        <div class="editor-part" id="editor-parte2-wrap" hidden>
+          <h2 class="part-title">PARTE SECONDA — Gestione delle manovre</h2>
+          <div id="editor-parte2"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="print-area" class="print-area"></div>
+
+  <input type="file" id="import-input" accept="application/json" hidden>
+  <input type="file" id="import-docx-input" accept=".docx" hidden>
+
+  <div id="docx-import-dialog" class="modal-overlay" hidden>
+    <div class="modal-box">
+      <h2>Importa RDS da Word (.docx)</h2>
+      <p class="modal-hint">
+        Scegli il tipo di documento corrispondente al file selezionato, poi conferma.
+        L'importazione è automatica ma da verificare: alla fine trovi l'elenco di ciò
+        che non è stato riconosciuto con certezza.
+      </p>
+      <div class="field">
+        <label for="docx-import-template">Tipo di documento</label>
+        <select id="docx-import-template"></select>
+      </div>
+      <p class="modal-filename" id="docx-import-filename"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="docx-import-cancel">Annulla</button>
+        <button type="button" class="btn-primary" id="docx-import-confirm">Importa</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="docx-report-dialog" class="modal-overlay" hidden>
+    <div class="modal-box modal-box-wide">
+      <h2>Report di importazione</h2>
+      <p class="modal-hint">
+        Copia questo testo e incollalo in chat per farlo controllare: elenca cosa è stato
+        riconosciuto e cosa no.
+      </p>
+      <textarea id="docx-report-text" class="report-textarea" readonly rows="16"></textarea>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="docx-report-copy">Copia negli appunti</button>
+        <button type="button" class="btn-primary" id="docx-report-close">Vai al documento</button>
+      </div>
+    </div>
+  </div>
+
+  <noscript>Per usare questa applicazione è necessario abilitare JavaScript.</noscript>
+
+  <script src="schema.js" defer></script>
+  <script src="storage.js" defer></script>
+  <script src="render.js" defer></script>
+  <script src="print.js" defer></script>
+  <script src="docximport.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

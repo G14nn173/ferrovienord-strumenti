@@ -1,4 +1,4 @@
-RILIEVI DI BORDO — Brescia · Iseo · Edolo
+RILIEVI DI BORDO — Rete FERROVIENORD
 FERROVIENORD
 
 A COSA SERVE
@@ -6,23 +6,35 @@ A COSA SERVE
 Registrare, dal treno in marcia, la progressiva chilometrica e il cippo km
 del punto che stai osservando. Un tocco sul pulsante grande e il punto è
 salvato, con l'ora, la posizione e una nota che puoi scrivere con calma.
+L'app copre più percorsi: il ramo Iseo (Brescia-Iseo-Edolo) e le diramazioni
+del ramo Milano da Cadorna verso Laveno, Como, Novara, Gallarate, Seregno,
+Asso e Camnago-Lentate.
 
 PRIMA DI PARTIRE
 ----------------
 1. Apri l'app e concedi il permesso di localizzazione.
-2. Scegli la località da cui parte il treno e la direzione di marcia.
+2. Scegli il PERCORSO su cui ti trovi, poi la località da cui parte il treno
+   e la direzione di marcia.
 3. Premi "Avvia rilevamento".
 4. Tieni lo schermo acceso: l'app lo chiede al telefono, ma se il telefono
    si blocca comunque, riaprila e riaggancia a una località.
+
+SE IL TRENO CAMBIA PERCORSO (un bivio, es. Saronno)
+----------------------------------------------------
+La linea si dirama in diversi punti. Quando il treno prosegue su un percorso
+diverso da quello scelto all'avvio, apri "Aggancio manuale": scegli lì il
+nuovo percorso e poi la località su cui ti trovi, e premi "Aggancia". Da quel
+momento la progressiva segue il nuovo percorso.
 
 COME LEGGERE IL NUMERO GRANDE
 -----------------------------
    47+382   =   382 metri dopo il cippo 47
 
-Sotto trovi il cippo di riferimento e quanto manca al successivo.
-Lo zero è il paraurti del I binario della stazione di Brescia; le
-progressive delle località sono quelle del Fascicolo Linee, riferite
-all'asse del Fabbricato Viaggiatori.
+Sotto trovi il cippo di riferimento e quanto manca al successivo. Le
+progressive sono quelle del Fascicolo Linee, riferite all'asse del
+Fabbricato Viaggiatori: ogni percorso ha la propria numerazione e i propri
+estremi, mostrati sotto la barra di avanzamento (es. "Saronno 21,157" e
+"Como Lago 46,088").
 
 SE HAI PREMUTO IN RITARDO
 -------------------------
@@ -66,7 +78,7 @@ LA TRACCIA GPS
 --------------
 L'app registra in sottofondo il percorso del treno. Non serve a te: serve a
 chi cura l'applicazione per affinare la geometria della linea. Dopo un
-viaggio completo Brescia–Edolo puoi esportarla e consegnarla.
+viaggio completo su un percorso puoi esportarla e consegnarla.
 
 LIMITI DA CONOSCERE
 -------------------
@@ -75,5 +87,6 @@ LIMITI DA CONOSCERE
   sulla velocità del GPS e l'errore tipico è di pochi metri.
 - In galleria l'app prosegue a stima per al massimo 90 secondi o 2,5 km,
   poi ferma la progressiva invece di inventarla.
-- La fermata di Brescia Violino non ha una coordinata attendibile nei dati
-  di partenza: l'app non la usa per l'aggancio automatico.
+- Alcune fermate non hanno una coordinata attendibile nei dati di partenza
+  (es. Brescia Violino, Castellanza, Groane): l'app non le usa per
+  l'aggancio automatico, ma il loro km resta corretto.

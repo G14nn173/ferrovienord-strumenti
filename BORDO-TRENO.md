@@ -1,4 +1,4 @@
-# Rilievi di bordo — Brescia · Iseo · Edolo
+# Rilievi di bordo — Rete FERROVIENORD
 
 Web app (PWA) per i manutentori a bordo treno: un tocco registra la progressiva
 chilometrica e il cippo km del punto osservato. Sta in `bordo-treno/`.
@@ -6,6 +6,14 @@ chilometrica e il cippo km del punto osservato. Sta in `bordo-treno/`.
 È un'applicazione separata dalla Mappa interattiva (`portable/`): stessa palette
 e stessa filosofia — HTML/CSS/JS puri, nessuna dipendenza, nessun passo di build
 — ma destinazione diversa (telefono, in movimento, offline).
+
+Copre **9 percorsi**: il ramo Iseo (Brescia–Iseo–Edolo) e otto percorsi del
+ramo Milano (Cadorna–Saronno e le sue diramazioni verso Laveno, Como, Novara,
+Gallarate via Malpensa, Seregno, Asso e Camnago-Lentate). Il manutentore
+scegli il proprio percorso all'avvio e può cambiarlo in corsa nei punti dove
+la linea si dirama. Dettagli tecnici completi (architettura, decisioni,
+metodo di validazione dei cippi) in **[`bordo-treno/AGENTS.md`](bordo-treno/AGENTS.md)**;
+questa pagina resta un riassunto per chi non deve toccare il codice.
 
 ## Avvio in locale
 
@@ -27,7 +35,7 @@ senza campo.
 
 ## Come viene calcolata la progressiva
 
-Odometria ancorata ai cippi chilometrici:
+Odometria ancorata ai cippi chilometrici, identica su ogni percorso:
 
 1. **Aggancio** — passando accanto a un cippo censito, il km viene riportato al
    suo valore esatto. I cippi stanno a un chilometro l'uno dall'altro, quindi a
@@ -55,88 +63,75 @@ L'errore residuo fra due cippi è quasi tutto il 2% iniettato nel GPS; con la
 velocità Doppler reale di un telefono è di pochi metri.
 
 Quattro difese contro i casi in cui il metodo cede, tutte verificate in
-simulazione:
+simulazione (dettagli e numeri in `AGENTS.md`): velocità GPS non credibile,
+galleria (nessuna oltre i 1.000 m sul ramo Iseo; una sul ramo Milano, verso
+Malpensa), cippo superato al buio, sosta in località come rete di sicurezza.
 
-- **velocità GPS non credibile** — se la strada integrata non è compatibile con
-  lo spostamento osservato, si passa al calcolo sulle posizioni
-  (`velocitaCoerente`);
-- **galleria** — senza fix la progressiva prosegue stimata per al massimo 90 s o
-  2.500 m, poi si ferma invece di inventare. Il limite è dimensionato sulla
-  sezione 26 del Fascicolo: sulla Brescia–Edolo non esistono gallerie oltre i
-  1.000 m;
-- **cippo superato al buio** — al ritorno del segnale la progressiva viene
-  ricollocata proiettando la posizione sulla spezzata dei cippi, e resta marcata
-  come *ricostruita* (numero ambra, avviso a schermo, colonna dedicata
-  nell'export) finché non si aggancia a un cippo vero (`ricollocaSeNecessario`);
-- **sosta in località** — rete di sicurezza che interviene solo se da oltre 3 km
-  non si aggancia più nulla. È cercata **solo fra le località**, mai fra i
-  cippi: un treno fermo a Iseo (km 25,713) si trova a 287 m dal cippo 26, e
-  agganciare lì introdurrebbe quell'errore (`verificaSosta`).
+## Percorsi e cambio percorso
+
+Ogni percorso è un tronco del Fascicolo (o una catena di tronchi con
+progressiva continua), **non** un grafo dell'intera rete: ognuno ha una
+propria scala di km, quasi sempre senza partire da zero (es. Saronno-Como va
+da 21,157 a 46,088). Alla schermata "Prima di partire" si scelgono percorso,
+località di partenza e verso; nella scheda "Aggancio manuale" si può cambiare
+percorso in corsa, per i punti dove la linea si dirama (es. Saronno). Ogni
+rilievo salvato registra il proprio percorso, perché i valori di km si
+sovrappongono fra percorsi diversi — km 21 esiste su almeno quattro percorsi
+del ramo Milano, in luoghi fisici diversi.
 
 ## Dati
 
-`bordo-treno/dati/linea-bie.json` — 206 punti, rigenerabile con
-`strumenti\Genera-DatiLinea.ps1`:
+`bordo-treno/dati/rete.json` — un file per tutti i percorsi, rigenerabile con
+`strumenti\Genera-DatiRete.ps1`:
 
-| | |
-|---|---|
-| 36 località | progressive dal Fascicolo, coordinate dall'export PIC |
-| 102 cippi chilometrici | censimento georeferenziato della diagnostica |
-| 43 PL automatici | Fascicolo |
-| 21 punti di variazione velocità | Fascicolo |
-| 4 deviatoi e segnali | Fascicolo |
+| ramo | percorsi | località | cippi |
+|---|---|---|---|
+| Iseo (Brescia–Edolo) | 1 | 36 | 102 |
+| Milano (Cadorna e diramazioni) | 8 | 89 | ~245 |
 
 Fonti:
 
-- **progressive chilometriche**: Fascicolo Linee FERROVIENORD, ed. 2020, agg.
-  CT n. 22/2026, *Fiancate di linea* tronchi Brescia–Iseo e Iseo–Edolo
-  (FL pp. 100–105), trascritte a mano dentro lo script di generazione;
-- **cippi**: `strumenti/fonti/ISEO-Georeferenziazione Cippi.csv`, coordinate
-  WGS84;
+- **progressive chilometriche**: Fascicolo Linee FERROVIENORD, ed. 2020,
+  Fiancate di linea (FL pp. 85–99 per il ramo Milano, FL pp. 100–105 per il
+  ramo Iseo), trascritte a mano dentro lo script di generazione;
+- **cippi**: `strumenti/fonti/ISEO-Georeferenziazione Cippi.csv` e
+  `MILANO-Georeferenziazione Cippi.csv`, coordinate WGS84;
 - **coordinate delle località**: `portable/network-data.json` (export PIC rete
-  64, UTM 32N / EPSG:32632), convertite in WGS84.
+  64, UTM 32N / EPSG:32632) — copre l'intera rete FERROVIENORD, quindi la
+  stessa fonte già in uso per il ramo Iseo ha dato anche le 89 località del
+  ramo Milano, tutte trovate.
 
-Le fonti sono state riscontrate fra loro: le progressive ricavate sommando le
-lunghezze delle tratte dell'export PIC coincidono **al metro** con quelle del
-Fascicolo su tutta la linea (Edolo 102,709 km).
+Le fonti sono state riscontrate fra loro con lo stesso metodo su entrambi i
+rami: le progressive ricavate sommando le lunghezze delle tratte dell'export
+PIC coincidono **al metro** con quelle del Fascicolo.
 
-Origine: km 0,000 al paraurti del I binario della stazione di Brescia;
-progressive delle località riferite all'asse del Fabbricato Viaggiatori.
+### Le coordinate PIC non sono tutte affidabili — 9 in tutto escluse
 
-### Il CSV dei cippi arriva con le coordinate rovinate
+Il vincolo usato per scovarle: **la corda in linea retta fra due località non
+può mai superare la lunghezza reale del binario fra loro**. Un rapporto fino a
+~1,30 è una curva vera (misurato su Vello–Toline, ramo Iseo); oltre ~1,40 è
+quasi certamente un dato sbagliato. Metodo completo, incluso come distinguere
+il punto colpevole da quello innocente quando compaiono insieme, in
+`AGENTS.md`.
 
-Nel file di origine le coordinate hanno perso il separatore decimale e hanno
-acquisito i punti delle migliaia: `1.020.061.159` sta per `10,20061159`. Lo
-script le ricostruisce inserendo la virgola dopo le prime cifre e accettando il
-risultato **solo se cade nell'intervallo plausibile per questa linea**
-(`Convert-CoordinataGrezza`); una riga che non rientra viene scartata e
-segnalata, non indovinata.
+Trovate e marcate `coordAffidabile: false` (km invariato, solo escluse
+dall'aggancio GPS):
 
-Verifiche eseguite sul censimento, tutte superate:
+| punto | come è stato scoperto |
+|---|---|
+| Brescia Violino | coordinate PIC tonde (valori esatti a 100 m) |
+| Malpensa Aeroporto T2 | coordinate PIC tonde |
+| Bivio/PC Cardano | coordinate PIC tonde |
+| Castellanza | corda quasi doppia dell'arco reale |
+| Gallarate *(solo sul percorso via Malpensa)* | il Fascicolo stampa due progressive diverse per questa stazione (56,753 e 24,922); verificato che la prima non torna con la posizione reale rispetto agli ultimi cippi |
+| Groane, Ceriano Laghetto-Solaro, Ceriano Laghetto Parco delle Groane | le tre fermate giacciono quasi su una retta perfetta nell'export, mentre la linea vera curva |
+| Seveso Baruccana | scagionata Cesano Maderno perché corretta altrove nel dataset; per eliminazione la colpa è di questo punto |
 
-- distanza fra cippi consecutivi: media 965 m, minima 805 m, **nessuna oltre i
-  1.000 m** — la corda è sempre più corta dell'arco, quindi valori sotto il
-  chilometro sono curve, non errori. Le sei più corte (805–887 m) cadono dove ci
-  si aspetta: Vello–Toline, Ceto-Cerveno–Capo di Ponte, la Valcamonica alta;
-- riscontro con le 36 località del Fascicolo: scostamento medio 66 m, con valori
-  di 1–6 m su Paderno, Vello, Castegnato, Capo di Ponte e Borgo San Giovanni.
-  L'assenza di uno scostamento sistematico esclude un disallineamento di datum.
-  I valori maggiori (100–150 m) cadono tutti su curve strette, dove
-  l'interpolazione lineare fra due cippi taglia l'arco.
-
-### Anomalie note nelle sorgenti
-
-**Brescia Violino** ha in `network-data.json` coordinate palesemente
-convenzionali (590500 / 5044800, valori tondi). Due riscontri indipendenti lo
-confermano: la sua distanza in retta da Brescia Borgo San Giovanni risulta
-maggiore della lunghezza reale del binario (impossibile), e dista 904 m dalla
-posizione interpolata fra i cippi, contro una media di 66 m. Il punto è marcato
-`coordAffidabile: false` e non viene usato per l'aggancio. Il suo km (3,952)
-resta corretto, perché viene dal Fascicolo.
-
-**Cippi della Rovato FN – Bornato-Calino**: il CSV ne contiene 5, ma su una
-progressiva propria (origine alla mezzeria del FV di Bornato-Calino). Sono
-esclusi dalla generazione: mescolarli falserebbe il modello chilometrico.
+Anche il CSV dei cippi Iseo è arrivato con le coordinate corrotte (numeri
+senza separatore decimale) e con 5 cippi di un tronco diverso
+(Rovato FN–Bornato-Calino, esclusi perché su una progressiva propria); il CSV
+Milano aveva 5 cippi consecutivi (Saronno-Como, km 40–44) con coordinate
+mescolate fra loro. Dettagli di ogni caso in `AGENTS.md`.
 
 ## Cosa manca
 
@@ -147,8 +142,10 @@ esclusi dalla generazione: mescolarli falserebbe il modello chilometrico.
   una vista cartografica.
 - **Vista su mappa**: oggi non c'è; con i cippi la geometria è sufficiente per
   disegnarla.
+- **Tronco Rovato FN–Bornato-Calino**: i suoi 5 cippi sono già nel CSV Iseo ma
+  non ancora integrati come percorso a sé.
 - I rilievi stanno in `localStorage`, la traccia GPS in IndexedDB: sono legati
   al browser del telefono e non sono sincronizzati da nessuna parte. L'export è
   l'unico modo di metterli al sicuro.
 - Nessun test automatico: le verifiche sono state fatte in simulazione,
-  iniettando un `watchPosition` finto.
+  iniettando un `watchPosition` finto — mai ancora con un GPS vero.
